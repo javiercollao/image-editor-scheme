@@ -45,6 +45,9 @@ Por lo que podemos identificar algunas funcionalidades
 Con el analisis del enenunciado se concluye que el juego Dobble contiene:
 
 1. TDA image, contiene todas las caractericas de una imagen.
+2. TDA pixbit
+3. TDA pixhex
+4. TDA pixrgb
 
 ### Documentación
 
