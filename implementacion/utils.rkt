@@ -53,3 +53,17 @@
         )
     )
 )
+
+;; Descripción: retorna el primer elemento de la lista
+;; Dom: list 
+;; Rec: element
+;; Tipo de recursión: NA
+
+(define firstElement car)
+
+;; Descripción: elimina el primer elemento de la lista
+;; Dom: list 
+;; Rec: element
+;; Tipo de recursión: NA
+
+(define firsElementRemove cdr)

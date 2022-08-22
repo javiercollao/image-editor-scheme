@@ -1,6 +1,6 @@
 #lang racket
 ;(require math)
-;(require "utils/lista_19177246_CollaoCallpa.rkt") 
+(require "./utils.rkt") 
 (provide (all-defined-out))
 
 ;; ======================================================
@@ -21,8 +21,8 @@
 ;; Rec: image (list)
 ;; Tipo de recursión: NA
 
-
-
+(define image list)
+    
 ;; ======================================================
 ;; Capa Pertenencia
 
@@ -32,6 +32,10 @@
 ;; Rec:
 ;; Tipo de recursión:
 
+(define bitmap? (lambda (imageList)
+    (firsElementRemove (firsElementRemove imageList))
+    ;; Verificar ...
+))
 
 ;; pixmap? 
 ;; Descripción: función que permite determinar si la imagen corresponde a un pixmap-d.
@@ -39,6 +43,10 @@
 ;; Rec:
 ;; Tipo de recursión:
 
+(define pixmap? (lambda (imageList)
+    (firsElementRemove (firsElementRemove imageList))
+    ;; Verificar ...
+))
 
 ;; hexmap?
 ;; Descripción: función que permite determinar si la imagen corresponde a un hexmap-d.
@@ -46,6 +54,10 @@
 ;; Rec:
 ;; Tipo de recursión:
 
+(define hexmap? (lambda (imageList)
+    (firsElementRemove (firsElementRemove imageList))
+    ;; Verificar ...
+))
 
 ;; compressed?
 ;; Descripción: función que determina si una imagen está comprimida.
