@@ -1,6 +1,5 @@
-#lang racket
-;(require math)
-;(require "utils/lista_19177246_CollaoCallpa.rkt") 
+#lang racket 
+(require "./utils.rkt") 
 (provide (all-defined-out))
 
 ;; ======================================================
@@ -15,3 +14,16 @@
 
 ;; ======================================================
 ;; Capa Constructor
+
+;; Descripción: Constructor de un tipo de dato pixbit-d
+;; Dom: x (int) , y (int) , bit ([0|1]) (int) , depth (int)
+;; Rec: pixbit-d (list)
+;; Tipo de recursión: NA
+
+(define pixbit-d (lambda (posX posY bit depth)
+    (if (and (>= posX 0) (>= posY 0) (>= depth 0) (or (= bit 0) (= bit 1)) )
+        (list posX posY bit depth)
+        null
+    )
+))
+

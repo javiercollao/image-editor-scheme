@@ -66,4 +66,12 @@
 ;; Rec: element
 ;; Tipo de recursión: NA
 
-(define firsElementRemove cdr)
+(define firstElementRemove cdr)
+
+
+;; Descripción: retorna el largo de un string
+;; Dom: string 
+;; Rec: int
+;; Tipo de recursión: NA
+
+(define strLength string-length)

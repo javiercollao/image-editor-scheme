@@ -1,6 +1,6 @@
 #lang racket
 ;(require math)
-;(require "utils/lista_19177246_CollaoCallpa.rkt") 
+(require "./utils.rkt") 
 (provide (all-defined-out))
 
 ;; ======================================================
@@ -16,7 +16,17 @@
 ;; ======================================================
 ;; Capa Constructor
 
+;; Descripción: Constructor de un tipo de dato pixrgb-d
+;; Dom: x (int), y (int), hex(String), depth (int)
+;; Rec: pixhex-d (list)
+;; Tipo de recursión: NA
 
+(define pixhex-d (lambda (posX posY hex depth)
+    (if (and (>= posX 0) (>= posY 0) (>= depth 0) (string? hex) (= 6 (strLength hex))
+        (list posX posY hex depth)
+        null
+    )
+))
 
 
 

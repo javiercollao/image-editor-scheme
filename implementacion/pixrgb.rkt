@@ -15,3 +15,16 @@
 
 ;; ======================================================
 ;; Capa Constructor
+
+;; Descripción: Constructor de un tipo de dato pixrgb-d
+;; Dom: x (int) , y (int) , r (C) , g (C) , b(C) , depth (int)
+;; Rec: pixrgb-d (list)
+;; Tipo de recursión: NA
+
+(define pixrgb-d (lambda (posX posY r g b depth)
+    (if (and (>= posX 0) (>= posY 0) (>= depth 0) (>= r 0) (<= r 255) (>= g 0) (<= g 255) (>= b 0) (<= b 255) )
+        (list posX posY r g b depth)
+        null
+    )
+))
+

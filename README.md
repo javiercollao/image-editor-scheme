@@ -12,11 +12,14 @@ Al incorporar la dimensión D (profundidad) capturada a través de una cámara e
 
 Algunas definiciones
 
-* bitmaps (para imágenes donde cada pixel o pixbit puede tomar el valor  o 1) 
-* pixmaps (para imágenes donde cada pixel o pixrgb es una combinación de los valores para los canales R, G y B)
-* hexmaps-d (donde cada pixel o pixhex expresa la información del color del pixel a través de un valor único hexadecimal de 6 valores) a las que se suma la dimensión D.
- 
+* bitmaps (para imágenes donde cada pixel o pixbit puede tomar el valor  0 o 1), A bitmap is a simple black and white image, stored as a 2D array of bits (ones and zeros).
 
+* pixmaps (para imágenes donde cada pixel o pixrgb es una combinación de los valores para los canales R, G y B, que toman valores de 0 a 255)
+
+* hexmaps-d (donde cada pixel o pixhex expresa la información del color del pixel a través de un valor único hexadecimal de 6 valores) 
+
+Se debe considerar la dimensión x, y, z (depth).
+ 
 Por lo que podemos identificar algunas funcionalidades 
 
 1. image (constructor)                             

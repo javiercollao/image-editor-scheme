@@ -70,7 +70,23 @@
 ;; ======================================================
 ;; Capa Selector
 
+;; Descripción: Retorna el elemento Width de una imagen. 
+;; Dom: image (list)
+;; Rec: width (int)
+;; Tipo de recursión: NA
 
+(define getWidth (lambda (imageList)
+    (firstElement imageList)
+))
+
+;; Descripción: Retorna el elemento Height de una imagen. 
+;; Dom: image (list)
+;; Rec: height (int)
+;; Tipo de recursión: NA
+
+(define getHeight (lambda (imageList)
+    (firstElement (firsElementRemove imageList))
+))
 
 ;; ======================================================
 ;; Otras funciones
@@ -79,7 +95,7 @@
 ;; Descripción: función que permite invertir una imágen horizontalmente.
 ;; Dom: 
 ;; Rec:
-;; Tipo de recursión:
+;; Tipo de recursión: 
 
 
 ;; flipV
