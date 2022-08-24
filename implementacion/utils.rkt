@@ -75,3 +75,11 @@
 ;; Tipo de recursión: NA
 
 (define strLength string-length)
+
+
+;; Descripción: retorna el largo de un list
+;; Dom: string 
+;; Rec: int
+;; Tipo de recursión: NA
+
+(define listLength length)
