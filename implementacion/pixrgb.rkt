@@ -1,6 +1,6 @@
 #lang racket
-;(require math)
-;(require "utils/lista_19177246_CollaoCallpa.rkt") 
+(require "./utils.rkt")
+(require "./pixbit.rkt")
 (provide (all-defined-out))
 
 ;; ======================================================
@@ -28,3 +28,36 @@
     )
 ))
 
+;; (pixrgb-d 1 1 23 234 44 5) #t
+;; (pixrgb-d 1 1 234 234 434 5) #f
+
+;; ======================================================
+;; Capa Selector
+
+;; tercer elemento
+;; Tipo de recursión: NA
+(define getR (lambda (L)
+    (firstElement (firstElementRemove (firstElementRemove L)))
+))
+
+;; cuarto elemento 
+;; Tipo de recursión: NA
+(define getG (lambda (L)
+    (firstElement (firstElementRemove (firstElementRemove (firstElementRemove L))))
+))
+
+;; quinto elemento 
+;; Tipo de recursión: NA
+(define getB (lambda (L)
+    (firstElement (firstElementRemove (firstElementRemove (firstElementRemove (firstElementRemove L)))))
+))
+
+;; sexto elemento 
+;; Tipo de recursión: NA
+(define getDepth-rgb (lambda (L)
+    (firstElement (firstElementRemove (firstElementRemove (firstElementRemove (firstElementRemove (firstElementRemove L))))))
+))
+
+
+;; ======================================================
+;; Capa Pertenencia

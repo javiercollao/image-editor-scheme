@@ -1,5 +1,5 @@
 #lang racket 
-(require "./utils.rkt") 
+(require "./utils.rkt")  
 (provide (all-defined-out))
 
 ;; ======================================================
@@ -24,6 +24,54 @@
     (if (and (>= posX 0) (>= posY 0) (>= depth 0) (or (= bit 0) (= bit 1)) )
         (list posX posY bit depth)
         null
+    )
+))
+
+;; (pixbit-d 0 0 1 4) #t
+;; (pixbit-d 0 2 2 2) #f
+
+;; ======================================================
+;; Capa Selector
+
+;; primer elemento
+;; Tipo de recursión: NA
+(define getPosX (lambda (L)
+    (firstElement L)
+))
+
+;; segundo elemento
+;; Tipo de recursión: NA
+(define getPosY (lambda (L)
+    (firstElement (firstElementRemove L))
+))
+
+;; tercer elemento
+;; Tipo de recursión: NA
+(define getBit (lambda (L)
+    (firstElement (firstElementRemove (firstElementRemove L)))
+))
+
+;; cuarto elemento 
+;; Tipo de recursión: NA
+(define getDepth (lambda (L)
+    (firstElement (firstElementRemove (firstElementRemove (firstElementRemove L))))
+))
+
+;; ======================================================
+;; Capa Pertenencia
+
+;; Tipo de recursión: NA
+(define pixbit-d? (lambda (L)
+    (if (null? L)
+        #f
+        (pixbit-d?Aux (getPosX L) (getPosY L) (getBit L) (getDepth L))
+    )
+))
+
+(define pixbit-d?Aux (lambda (posX posY bit depth)
+    (if (and (>= posX 0) (>= posY 0) (>= depth 0) (or (= bit 0) (= bit 1)) )
+        #t
+        #f
     )
 ))
 

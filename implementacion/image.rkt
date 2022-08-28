@@ -1,5 +1,4 @@
-#lang racket
-;(require math)
+#lang racket 
 (require "./utils.rkt") 
 (provide (all-defined-out))
 
@@ -33,9 +32,13 @@
 ;; Tipo de recursión:
 
 (define bitmap? (lambda (imageList)
-    (firsElementRemove (firsElementRemove imageList))
+    (firstElementRemove (firstElementRemove imageList))
     ;; Verificar ...
 ))
+
+;(define bitmapAux (lambda (L)
+    
+;))
 
 ;; pixmap? 
 ;; Descripción: función que permite determinar si la imagen corresponde a un pixmap-d.
@@ -44,9 +47,13 @@
 ;; Tipo de recursión:
 
 (define pixmap? (lambda (imageList)
-    (firsElementRemove (firsElementRemove imageList))
+    (firstElementRemove (firstElementRemove imageList))
     ;; Verificar ...
 ))
+
+;(define pixmapAux (lambda (L)
+
+;))
 
 ;; hexmap?
 ;; Descripción: función que permite determinar si la imagen corresponde a un hexmap-d.
@@ -55,9 +62,13 @@
 ;; Tipo de recursión:
 
 (define hexmap? (lambda (imageList)
-    (firsElementRemove (firsElementRemove imageList))
+    (firstElementRemove (firstElementRemove imageList))
     ;; Verificar ...
 ))
+
+;(define hexmapAux (lambda (L)
+
+;))
 
 ;; compressed?
 ;; Descripción: función que determina si una imagen está comprimida.
@@ -85,7 +96,7 @@
 ;; Tipo de recursión: NA
 
 (define getHeight (lambda (imageList)
-    (firstElement (firsElementRemove imageList))
+    (firstElement (firstElementRemove imageList))
 ))
 
 ;; ======================================================
