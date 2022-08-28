@@ -22,25 +22,22 @@ Se debe considerar la dimensión x, y, z (depth).
  
 Por lo que podemos identificar algunas funcionalidades 
 
-1. image (constructor)                             
-2. bitmap? 
-3. pixmap? 
-4. hexmap? 
-5. compressed? 
-6. flipH   
-7. flipV   
-8. crop    
-9. imgRGB->imgHex  
-1. histogram   
-11. rotate    
-12. compress    
-13. edit    
-14. invertColorBit  
-15. invertColorRGB  
-16. adjustChannel   
-17. image->string   
-18. depthLayers 
-19. decompress
+1. Recortar imágen
+2. Invertir una imágen horizontalmente
+3. Invertir una imágen verticalmente
+4. Comprimir imágen en base a eliminación del color con mayor frecuencia.
+5. Convertir a hexadecimal
+6. Visualizar la imagen
+7. Rotar imágen en 90° a la derecha
+8. Rotar imágen en 90° a la izquierda
+9. Histograma
+10. Descomprimir imagen en base a restitución del color con mayor frecuencia
+11. Aplicar operaciones como las anteriores a un área seleccionada dentro de la imagen
+12. Convertir imágen a blanco y negro
+13. Convertir imágen a escala de grises
+14. Editar una imágen a partir de la aplicación de funciones especiales sobre los pixeles
+15. Separar capas de una imagen 3D en base a la profundidad. De esta forma desde una imagen 3D se puede devolver una lista de imágenes 2D
+16. Redimensionar imágen
 
 
 ### TDAs
