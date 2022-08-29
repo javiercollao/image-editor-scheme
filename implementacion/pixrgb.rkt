@@ -10,7 +10,7 @@
 ;; @representation :   Este TDA representa a la lista pixrgb-d, contiene todas las 
 ;; características para ... con C cubriendo valores entre 0 y 255
 ;;
-;; pixrgb-d =  x (int) X y (int) X r (C) X g (C) X b(C) X d (int)
+;; pixrgb-d = x (int) X y (int) X r (C) X g (C) X b(C) X d (int)
 ;;
 
 ;; ======================================================
@@ -34,30 +34,71 @@
 ;; ======================================================
 ;; Capa Selector
 
-;; tercer elemento
+;; Descripción: Retorna el elemento R (red) de la lista
+;; Dom: pixrgb-d (list)
+;; Rec: r (int) 
 ;; Tipo de recursión: NA
+
 (define getR (lambda (L)
     (firstElement (firstElementRemove (firstElementRemove L)))
 ))
 
-;; cuarto elemento 
+;; Descripción: Retorna el elemento G (green) de la lista
+;; Dom: pixrgb-d (list)
+;; Rec: g (int) 
 ;; Tipo de recursión: NA
+
 (define getG (lambda (L)
     (firstElement (firstElementRemove (firstElementRemove (firstElementRemove L))))
 ))
 
-;; quinto elemento 
+;; Descripción: Retorna el elemento B (blue) de la lista
+;; Dom: pixrgb-d (list)
+;; Rec: b (int) 
 ;; Tipo de recursión: NA
+
 (define getB (lambda (L)
     (firstElement (firstElementRemove (firstElementRemove (firstElementRemove (firstElementRemove L)))))
 ))
 
-;; sexto elemento 
+;; Descripción: Retorna el elemento depth de la lista
+;; Dom: pixrgb-d (list)
+;; Rec: depth (int) 
 ;; Tipo de recursión: NA
+
 (define getDepth-rgb (lambda (L)
     (firstElement (firstElementRemove (firstElementRemove (firstElementRemove (firstElementRemove (firstElementRemove L))))))
 ))
 
-
 ;; ======================================================
 ;; Capa Pertenencia
+
+;; Descripción: Verifica si la lista pixrgb-d es valida
+;; Dom: pixrgb-d (list)
+;; Rec: true or false (bool)
+;; Tipo de recursión: NA 
+
+(define pixrgb-d? (lambda (L)
+    (if (null? L)
+        #f
+        (pixrgb-d?Aux (getPosX L) (getPosY L) (getR L) (getG L) (getB L) (getDepth-rgb L))
+    )
+))
+
+(define pixrgb-d?Aux (lambda (posX posY r g b depth)
+    (if (and (>= posX 0) (>= posY 0) (>= depth 0) (>= r 0) (<= r 255) (>= g 0) (<= g 255) (>= b 0) (<= b 255) )
+        #t
+        #f
+    )
+))
+
+;; ======================================================
+;; Colores de ejemplo RGB
+;; (define negro-rgb (pixrgb-d 1 2 0 0 0 1))
+;; (define blanco-rgb (pixrgb-d 1 2 255 255 255 1))
+;; (define rojo-rgb (pixrgb-d 1 2 255 0 0 1))
+;; (define verde-rgb (pixrgb-d 1 2 0 255 0 1))
+;; (define azul-rgb (pixrgb-d 1 2 0 0 255 1))
+;; (define naranjo-rgb (pixrgb-d 1 2 255 128 0 1))
+;; (define amarillo-rgb (pixrgb-d 1 2 255 255 0 1))
+;; (define otro-rgb (pixrgb-d 1 2 128 128 128 1))

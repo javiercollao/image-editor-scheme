@@ -1,5 +1,8 @@
 #lang racket 
-(require "./utils.rkt") 
+(require "./utils.rkt")
+(require "./pixbit.rkt")
+(require "./pixrgb.rkt")
+(require "./pixhex.rkt")
 (provide (all-defined-out))
 
 ;; ======================================================
@@ -21,7 +24,9 @@
 ;; Tipo de recursión: NA
 
 (define image list)
-    
+
+;; (image 2 2 (pixbit-d 0 0 1 4) (pixbit-d 0 1 0 4) (pixbit-d 1 0 0 4) (pixbit-d 1 1 0 4))
+;; (image 2 2 )   
 ;; ======================================================
 ;; Capa Pertenencia
 
@@ -32,29 +37,32 @@
 ;; Tipo de recursión:
 
 (define bitmap? (lambda (imageList)
-    (firstElementRemove (firstElementRemove imageList))
-    ;; Verificar ...
+    (myMap operationBitmap? (firstElementRemove (firstElementRemove imageList)))
 ))
 
-;(define bitmapAux (lambda (L)
-    
-;))
+(define operationBitmap? (lambda (e)
+    (pixbit-d? e)
+))
+
+;; << necesitamos un filter para verificar si existe algun false >>, 
+;; ademas , es necesario que coincida con la cantidad de widht y heignt entregados?
+;; que sucede si se repite la misma posicion  para cada pixbit-d* | pixrgb-d* | pixhex-d* segun sea el caso
+
 
 ;; pixmap? 
 ;; Descripción: función que permite determinar si la imagen corresponde a un pixmap-d.
 ;; Dom: 
-;; Rec:
-;; Tipo de recursión:
+;; Rec: 
+;; Tipo de recursión: 
 
 (define pixmap? (lambda (imageList)
-    (firstElementRemove (firstElementRemove imageList))
-    ;; Verificar ...
+    (myMap operationPixmap? (firstElementRemove (firstElementRemove imageList)))
 ))
 
-;(define pixmapAux (lambda (L)
-
-;))
-
+(define operationPixmap? (lambda (e)
+    (pixrgb-d? e)
+))
+ 
 ;; hexmap?
 ;; Descripción: función que permite determinar si la imagen corresponde a un hexmap-d.
 ;; Dom: 
@@ -62,13 +70,12 @@
 ;; Tipo de recursión:
 
 (define hexmap? (lambda (imageList)
-    (firstElementRemove (firstElementRemove imageList))
-    ;; Verificar ...
+    (myMap operationHexmap? (firstElementRemove (firstElementRemove imageList)))
 ))
 
-;(define hexmapAux (lambda (L)
-
-;))
+(define operationHexmap? (lambda (e)
+    (pixhex-d? e)
+))
 
 ;; compressed?
 ;; Descripción: función que determina si una imagen está comprimida.

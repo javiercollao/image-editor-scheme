@@ -9,7 +9,7 @@
 ;; @representation :   Este TDA representa a la lista pixbit-d, contiene todas las 
 ;; características para ... 
 ;;
-;; pixbit-d =  x (int) X y (int) X bit ([0|1]) X depth (int)
+;; pixbit-d = x (int) X y (int) X bit ([0|1]) X depth (int)
 ;;
 
 ;; ======================================================
@@ -33,26 +33,38 @@
 ;; ======================================================
 ;; Capa Selector
 
-;; primer elemento
+;; Descripción: Retorna el elemento PosX de la lista
+;; Dom: pixbit-d (list) | pixrgb-d (list) | pixhex-d (list)
+;; Rec: posX (int) 
 ;; Tipo de recursión: NA
+
 (define getPosX (lambda (L)
     (firstElement L)
 ))
 
-;; segundo elemento
+;; Descripción: Retorna el elemento PosY de la lista
+;; Dom: pixbit-d (list) | pixrgb-d (list) | pixhex-d (list)
+;; Rec: posY (int) 
 ;; Tipo de recursión: NA
+
 (define getPosY (lambda (L)
     (firstElement (firstElementRemove L))
 ))
 
-;; tercer elemento
+;; Descripción: Retorna el elemento bit de la lista
+;; Dom: pixbit-d (list)
+;; Rec: bit ([0|1]) (int)
 ;; Tipo de recursión: NA
+
 (define getBit (lambda (L)
     (firstElement (firstElementRemove (firstElementRemove L)))
 ))
 
-;; cuarto elemento 
+;; Descripción: Retorna el elemento depth de la lista
+;; Dom: pixbit-d (list) | pixhex-d (list)
+;; Rec: depth (int) 
 ;; Tipo de recursión: NA
+
 (define getDepth (lambda (L)
     (firstElement (firstElementRemove (firstElementRemove (firstElementRemove L))))
 ))
@@ -60,7 +72,11 @@
 ;; ======================================================
 ;; Capa Pertenencia
 
-;; Tipo de recursión: NA
+;; Descripción: Verifica si la lista pixbit-d es valida
+;; Dom: pixbit-d (list)
+;; Rec: true or false (bool)
+;; Tipo de recursión: NA 
+
 (define pixbit-d? (lambda (L)
     (if (null? L)
         #f

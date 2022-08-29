@@ -34,8 +34,11 @@
 ;; ======================================================
 ;; Capa Selector
 
-;; tercer elemento
+;; Descripción: Retorna el elemento hex de la lista
+;; Dom: pixhex-d (list)
+;; Rec: hex (string) 
 ;; Tipo de recursión: NA
+
 (define getHex (lambda (L)
     (firstElement (firstElementRemove (firstElementRemove L)))
 ))
@@ -43,7 +46,34 @@
 ;; ======================================================
 ;; Capa Pertenencia
 
+;; Descripción: Verifica si la lista pixhex-d es valida
+;; Dom: pixhex-d (list)
+;; Rec: true or false (bool)
+;; Tipo de recursión: NA 
 
+(define pixhex-d? (lambda (L)
+    (if (null? L)
+        #f
+        (pixhex-d?Aux (getPosX L) (getPosY L) (getHex L) (getDepth L))
+    )
+))
 
+(define pixhex-d?Aux (lambda (posX posY hex depth)
+    (if (and (>= posX 0) (>= posY 0) (>= depth 0) (string? hex) (= 6 (strLength hex)))
+        #t
+        #f
+    )
+))
+
+;; ======================================================
+;; Colores de ejemplo HEX
+;; (define negro-hex (pixhex-d 1 2 "000000" 1))
+;; (define blanco-hex (pixhex-d 1 2 "FFFFFF" 1))
+;; (define rojo-hex (pixhex-d 1 2 "FF0000" 1))
+;; (define verde-hex (pixhex-d 1 2 "00FF00" 1))
+;; (define azul-hex (pixhex-d 1 2 "0000FF" 1))
+;; (define naranjo-hex (pixhex-d 1 2 "FF8000" 1))
+;; (define amarillo-hex (pixhex-d 1 2 "FFFF00" 1))
+;; (define otro-hex (pixhex-d 1 2 "808080" 1))
 
 
