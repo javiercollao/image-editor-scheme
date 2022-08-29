@@ -1,1 +1,0 @@
-("8.4" ta6osx ("d44109b98c710283cd88026488648c9928535b59" . "8c69fac7069b25f6911a22e56e106cfdbca87bc6") #"/Users/delacoll/Desktop/usach/paradigma_programacion/lab1/implementacion/./utils.rkt" (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))
