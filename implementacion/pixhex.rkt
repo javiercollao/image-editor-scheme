@@ -65,15 +65,6 @@
     )
 ))
 
-;; ======================================================
-;; Colores de ejemplo HEX
-;; (define negro-hex (pixhex-d 1 2 "000000" 1))
-;; (define blanco-hex (pixhex-d 1 2 "FFFFFF" 1))
-;; (define rojo-hex (pixhex-d 1 2 "FF0000" 1))
-;; (define verde-hex (pixhex-d 1 2 "00FF00" 1))
-;; (define azul-hex (pixhex-d 1 2 "0000FF" 1))
-;; (define naranjo-hex (pixhex-d 1 2 "FF8000" 1))
-;; (define amarillo-hex (pixhex-d 1 2 "FFFF00" 1))
-;; (define otro-hex (pixhex-d 1 2 "808080" 1))
+
 
 
