@@ -77,3 +77,7 @@
 ;; Descripción: retorna el largo de un list
  
 (define listLength length)
+
+;; Descripción: retorna un booleano como verificacion si un elemento es falso
+
+(define isFalse? false?)

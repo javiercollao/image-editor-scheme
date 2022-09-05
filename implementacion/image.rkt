@@ -32,31 +32,48 @@
 
 ;; bitmap? 
 ;; Descripción: función que permite determinar si la imagen corresponde a un bitmap-d.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión:
+;; Dom: image (list)
+;; Rec: boolean
+;; Tipo de recursión: Cola
 
 (define bitmap? (lambda (imageList)
-    (myMap operationBitmap? (firstElementRemove (firstElementRemove imageList)))
+    (if (= 0 (length (bitmap?Aux1 imageList)))
+        #t
+        #f
+    )
+))
+
+(define bitmap?Aux1 (lambda (L)
+    (myFilter isFalse? (bitmap?Aux2 L))
+))
+
+(define bitmap?Aux2 (lambda (L)
+    (myMap operationBitmap? (elementsPix L))
 ))
 
 (define operationBitmap? (lambda (e)
     (pixbit-d? e)
 ))
-
-;; << necesitamos un filter para verificar si existe algun false >>, 
-;; ademas , es necesario que coincida con la cantidad de widht y heignt entregados?
-;; que sucede si se repite la misma posicion  para cada pixbit-d* | pixrgb-d* | pixhex-d* segun sea el caso
-
-
+ 
 ;; pixmap? 
-;; Descripción: función que permite determinar si la imagen corresponde a un pixmap-d.
+;; Descripción: función que permite determinar si la imagen corresponde a un pixrgb-d.
 ;; Dom: 
 ;; Rec: 
 ;; Tipo de recursión: 
 
 (define pixmap? (lambda (imageList)
-    (myMap operationPixmap? (firstElementRemove (firstElementRemove imageList)))
+    (if (= 0 (length (pixmap?Aux1 imageList)))
+        #t
+        #f
+    )
+))
+
+(define pixmap?Aux1 (lambda (L)
+    (myFilter isFalse? (pixmap?Aux2 L))
+))
+
+(define pixmap?Aux2 (lambda (L)
+    (myMap operationPixmap? (elementsPix L))
 ))
 
 (define operationPixmap? (lambda (e)
@@ -70,12 +87,24 @@
 ;; Tipo de recursión:
 
 (define hexmap? (lambda (imageList)
-    (myMap operationHexmap? (firstElementRemove (firstElementRemove imageList)))
+    (if (= 0 (length (hexmap?Aux1 imageList)))
+        #t
+        #f
+    )
+))
+
+(define hexmap?Aux1 (lambda (L)
+    (myFilter isFalse? (hexmap?Aux2 L))
+))
+
+(define hexmap?Aux2 (lambda (L)
+    (myMap operationHexmap? (elementsPix L))
 ))
 
 (define operationHexmap? (lambda (e)
     (pixhex-d? e)
 ))
+
 
 ;; compressed?
 ;; Descripción: función que determina si una imagen está comprimida.
@@ -104,6 +133,15 @@
 
 (define getHeight (lambda (imageList)
     (firstElement (firstElementRemove imageList))
+))
+
+;; Descripción: Retorna la lista de elementos [pixbit-d* | pixrgb-d* | pixhex-d*]
+;; Dom: image (list)
+;; Rec: [pixbit-d* | pixrgb-d* | pixhex-d*] (list)
+;; Tipo de recursión: NA
+
+(define elementsPix (lambda (imageList)
+    (firstElementRemove (firstElementRemove imageList))
 ))
 
 ;; ======================================================

@@ -5,7 +5,6 @@
 (require "./pixhex.rkt") 
 (require "./pixrgb.rkt")
 
-
 ;; ==========================
 
 ;; Colores RGB
@@ -34,6 +33,11 @@
 
 ;; ==========================
 
+;; Creando 2 imagenes de 2x2 
+
+(define img1 (image 2 2 (pixrgb-d 0 0 10 10 10 10)(pixrgb-d 0 1 20 20 20 20)(pixrgb-d 1 0 30 30 30 30) (pixrgb-d 1 1 40 40 40 40)))
+
+(define img2 (image 2 2 (pixbit-d 0 0 1 10)(pixbit-d 0 1 0 20)(pixbit-d 1 0 0 30)(pixbit-d 1 1 1 4)))
 
 
 
