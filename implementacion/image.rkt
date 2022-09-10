@@ -23,10 +23,15 @@
 ;; Rec: image (list)
 ;; Tipo de recursión: NA
 
-(define image list)
+;;(define image2 list)
 
-;; (image 2 2 (pixbit-d 0 0 1 4) (pixbit-d 0 1 0 4) (pixbit-d 1 0 0 4) (pixbit-d 1 1 0 4))
-;; (image 2 2 )   
+(define image (lambda (W H . listsPix)
+    (if (and (< 0 W) (< 0 H) (= (* W H) (length listsPix)))
+        (list W H listsPix)
+        null
+    )
+))
+
 ;; ======================================================
 ;; Capa Pertenencia
 
@@ -141,7 +146,7 @@
 ;; Tipo de recursión: NA
 
 (define elementsPix (lambda (imageList)
-    (firstElementRemove (firstElementRemove imageList))
+    (firstElement (firstElementRemove (firstElementRemove imageList)))
 ))
 
 ;; ======================================================
@@ -153,6 +158,35 @@
 ;; Rec:
 ;; Tipo de recursión: 
 
+;(define row (lambda (L)
+;    (rowAux (getWidth L) (elementsPix L))
+;))
+;
+;(define column (lambda (Width L)
+;    (if (= Width 0)
+;        null
+;        (cons (car L) (column (- Width 1) (cdr L)))    
+;    )  
+;))
+
+
+(define row (lambda (L)
+    (rowAux (getWidth L) (elementsPix L))
+))
+
+(define column (lambda (Width L)
+    (if (= Width 0)
+        null
+        (cons (car L) (column (- Width 1) (cdr L)))    
+    )  
+))
+
+(define prueba (lambda ()
+    
+))
+
+
+ 
 
 ;; flipV
 ;; Descripción: función que permite invertir una imágen verticalmente.
