@@ -169,22 +169,77 @@
 ;    )  
 ;))
 
+;; ordenar 
 
-(define row (lambda (L)
-    (rowAux (getWidth L) (elementsPix L))
+
+;;(define )
+
+;(define prueba (lambda (L)
+;    (fila (getWidth L) (elementsPix L))
+;))
+;
+;(define fila (lambda (Width L)
+;    (if (= Width 0)
+;        null
+;        (reverse (cons (car L) (fila (- Width 1) (cdr L)))) 
+;    )  
+;))
+
+
+;;=================================
+;(define linealCards (lambda (img) 
+;    (if (null? img)
+;        null
+;        (linealCardsJ (getHeight img) img)
+;    )
+;))
+;
+;(define linealCardsJ (lambda (j img)
+;    (if (= j 0)
+;        (append (linealElementsGenerator (cardsSize img) j img) null)
+;        (append (linealElementsGenerator (cardsSize img) j img) (linealCardsJ (- j 1) img) )    
+;    )  
+;))
+;
+;(define linealElementsGenerator (lambda (k j img)
+;        (if (= k 0)  
+;            (addElementToCard (+ k 1) null)
+;            (addElementToCard  (+ (* (cardsSize img) j) (+ k 1)) (linealElementsGenerator (- k 1) j img) )
+;        )
+;    )
+;) 
+
+; aqui lo que estamos creando es una lista de posiciones le damos numero de columnas Width y la fila y
+; podriamos utilizar filter para traer una cierta cantidad de elementos con una caracteristica que tengan posX 0
+;(define suma (lambda (columns y L)
+;    (sumaAux 0 (- columns 1) y (elementsPix L))
+;))
+;
+;(define sumaAux1 (lambda (i x y L)
+;  
+;))
+;
+;(define sumaAux (lambda (i x y L)
+;   (if (= i x)
+;    (cons (list y i (getBit (car L)) (getDepth (car L))) null)
+;    (cons (list y i (getBit (car L)) (getDepth (car L))) (sumaAux (+ i 1) x y (cdr L)))
+;   )
+;))
+
+
+
+(define invert (lambda (L i)
+    (reverse (myFilter i invertFunc (elementsPix L)))
+))
+ 
+(define invertFunc (lambda (element)
+    (if (= (car element) 1)
+        #t
+        #f
+    )
 ))
 
-(define column (lambda (Width L)
-    (if (= Width 0)
-        null
-        (cons (car L) (column (- Width 1) (cdr L)))    
-    )  
-))
-
-(define prueba (lambda ()
-    
-))
-
+ 
 
  
 
