@@ -25,6 +25,17 @@
     )   
 )
 
+(define myFilter2 (lambda (f i L)
+        (if (null? L)
+            null
+            (if (f (car L) i)
+                (cons (car L) (myFilter2 f i (cdr L)))
+                (myFilter2 f i (cdr L))
+            )
+        )
+    )   
+)
+
 ;; Descripción: retorna una lista de elementos donde a cada elemento se le aplica una operacion
 ;; Dom: funcionOperacion X lista
 ;; Rec: lista de elementos
@@ -34,6 +45,14 @@
             (if (null? L)
             null
             (cons (f (car L)) (myMap f (cdr L)))
+        )
+    )
+)
+
+(define myMap2 (lambda (f i L)
+            (if (null? L)
+            null
+            (cons (f (car L) i) (myMap2 f i (cdr L)))
         )
     )
 )

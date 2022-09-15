@@ -39,5 +39,7 @@
 
 (define img2 (image 2 2 (pixbit-d 0 0 1 10)(pixbit-d 0 1 0 20)(pixbit-d 1 0 0 30)(pixbit-d 1 1 1 4)))
 
+;; FlipH
 
+;(flipH img2)
 

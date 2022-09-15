@@ -25,9 +25,11 @@
 
 ;;(define image2 list)
 
+(define imageList list)
+
 (define image (lambda (W H . listsPix)
     (if (and (< 0 W) (< 0 H) (= (* W H) (length listsPix)))
-        (list W H listsPix)
+        (imageList W H listsPix)
         null
     )
 ))
@@ -131,6 +133,11 @@
     (firstElement imageList)
 ))
 
+;; Descripción: Retorna el elemento Width de una imagen considerando que la posicion 0. 
+(define width (lambda (img)
+    (- (getWidth img) 1)
+))
+
 ;; Descripción: Retorna el elemento Height de una imagen. 
 ;; Dom: image (list)
 ;; Rec: height (int)
@@ -138,6 +145,11 @@
 
 (define getHeight (lambda (imageList)
     (firstElement (firstElementRemove imageList))
+))
+
+;; Descripción: Retorna el elemento Height de una imagen considerando que la posicion 0. 
+(define height (lambda (img)
+    (- (getHeight img) 1)
 ))
 
 ;; Descripción: Retorna la lista de elementos [pixbit-d* | pixrgb-d* | pixhex-d*]
@@ -158,111 +170,9 @@
 ;; Rec:
 ;; Tipo de recursión: 
 
-;(define row (lambda (L)
-;    (rowAux (getWidth L) (elementsPix L))
-;))
-;
-;(define column (lambda (Width L)
-;    (if (= Width 0)
-;        null
-;        (cons (car L) (column (- Width 1) (cdr L)))    
-;    )  
-;))
-
-;; ordenar 
-
-
-;;(define )
-
-;(define prueba (lambda (L)
-;    (fila (getWidth L) (elementsPix L))
-;))
-;
-;(define fila (lambda (Width L)
-;    (if (= Width 0)
-;        null
-;        (reverse (cons (car L) (fila (- Width 1) (cdr L)))) 
-;    )  
-;))
-
-
-;;=================================
-;(define linealCards (lambda (img) 
-;    (if (null? img)
-;        null
-;        (linealCardsJ (getHeight img) img)
-;    )
-;))
-;
-;(define linealCardsJ (lambda (j img)
-;    (if (= j 0)
-;        (append (linealElementsGenerator (cardsSize img) j img) null)
-;        (append (linealElementsGenerator (cardsSize img) j img) (linealCardsJ (- j 1) img) )    
-;    )  
-;))
-;
-;(define linealElementsGenerator (lambda (k j img)
-;        (if (= k 0)  
-;            (addElementToCard (+ k 1) null)
-;            (addElementToCard  (+ (* (cardsSize img) j) (+ k 1)) (linealElementsGenerator (- k 1) j img) )
-;        )
-;    )
-;) 
-
-; aqui lo que estamos creando es una lista de posiciones le damos numero de columnas Width y la fila y
-; podriamos utilizar filter para traer una cierta cantidad de elementos con una caracteristica que tengan posX 0
-;(define suma (lambda (columns y L)
-;    (sumaAux 0 (- columns 1) y (elementsPix L))
-;))
-;
-;(define sumaAux1 (lambda (i x y L)
-;  
-;))
-;
-;(define sumaAux (lambda (i x y L)
-;   (if (= i x)
-;    (cons (list y i (getBit (car L)) (getDepth (car L))) null)
-;    (cons (list y i (getBit (car L)) (getDepth (car L))) (sumaAux (+ i 1) x y (cdr L)))
-;   )
-;))
-
-
-
-;(define invert (lambda (L i)
-;    (reverse (myFilter i invertFunc (elementsPix L)))
-;))
-; 
-;(define invertFunc (lambda (element)
-;    (if (= (car element) 1)
-;        #t
-;        #f
-;    )
-;))
-
-(define myFilter2 (lambda (f i L)
-        (if (null? L)
-            null
-            (if (f (car L) i)
-                (cons (car L) (myFilter2 f i (cdr L)))
-                (myFilter2 f i (cdr L))
-            )
-        )
-    )   
-)
-
-(define myMap2 (lambda (f i L)
-            (if (null? L)
-            null
-            (cons (f (car L) i) (myMap2 f i (cdr L)))
-        )
-    )
-)
-
-
 (define flipH (lambda (IMG)
-    (list (getWidth IMG) (getHeight IMG) (flipHAux (width IMG) 0 (elementsPix IMG)))
+    (imageList (getWidth IMG) (getHeight IMG) (flipHAux (width IMG) 0 (elementsPix IMG)))
 ))
-
  
 (define flipHAux (lambda (i n L)
    (if (= i 0)
@@ -271,12 +181,7 @@
    )
 ))
 
-(define width (lambda (img)
-    (- (getWidth img) 1)
-))
-
-
-;; para filter2
+;; Descripción: condición que verifica el valor de la coordenada X 
 (define posXVerification (lambda (L i)
     (if (= i (getPosX L))
         #t
@@ -284,26 +189,59 @@
     )
 ))
 
-;; para map
+;; Descripción: operación que modifica la coordenada X de 
 (define newPosX (lambda (L n)
-   (pixbit-d n (getPosY L) (getBit L) (getDepth L))
+    (if (pixbit-d? L)
+        (pixbit-d n (getPosY L) (getBit L) (getDepth L))
+        (if (pixrgb-d? L)
+            (pixrgb-d n (getPosY L) (getR L) (getG L) (getB L) (getDepth L))
+            (if (pixhex-d? L)
+                (pixhex-d n (getPosY L) (getHex L) (getDepth L))
+                null
+            )
+        )
+    )
 ))
 
-
-
-
-
-
-
  
-
- 
-
 ;; flipV
 ;; Descripción: función que permite invertir una imágen verticalmente.
 ;; Dom: 
 ;; Rec:
 ;; Tipo de recursión:
+
+(define flipV (lambda (IMG)
+    (imageList (getWidth IMG) (getHeight IMG) (flipVAux (height IMG) 0 (elementsPix IMG)))
+))
+ 
+(define flipVAux (lambda (i n L)
+   (if (= i 0)
+    (append (myMap2 newPosY n (myFilter2 posYVerification i  L)))
+    (append (myMap2 newPosY n (myFilter2 posYVerification i  L)) (flipVAux (- i 1) (+ n 1) L))
+   )
+))
+
+;; Descripción: condición que verifica el valor de la coordenada Y
+(define posYVerification (lambda (L i)
+    (if (= i (getPosY L))
+        #t
+        #f
+    )
+))
+
+;; Descripción: operación que modifica la coordenada Y de 
+(define newPosY (lambda (L n)
+    (if (pixbit-d? L)
+        (pixbit-d (getPosX L) n (getBit L) (getDepth L))
+        (if (pixrgb-d? L)
+            (pixrgb-d (getPosX L) n (getR L) (getG L) (getB L) (getDepth L))
+            (if (pixhex-d? L)
+                (pixhex-d (getPosX L) n (getHex L) (getDepth L))
+                null
+            )
+        )
+    )
+))
 
 
 ;; crop
