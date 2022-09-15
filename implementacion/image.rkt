@@ -228,16 +228,72 @@
 
 
 
-(define invert (lambda (L i)
-    (reverse (myFilter i invertFunc (elementsPix L)))
+;(define invert (lambda (L i)
+;    (reverse (myFilter i invertFunc (elementsPix L)))
+;))
+; 
+;(define invertFunc (lambda (element)
+;    (if (= (car element) 1)
+;        #t
+;        #f
+;    )
+;))
+
+(define myFilter2 (lambda (f i L)
+        (if (null? L)
+            null
+            (if (f (car L) i)
+                (cons (car L) (myFilter2 f i (cdr L)))
+                (myFilter2 f i (cdr L))
+            )
+        )
+    )   
+)
+
+(define myMap2 (lambda (f i L)
+            (if (null? L)
+            null
+            (cons (f (car L) i) (myMap2 f i (cdr L)))
+        )
+    )
+)
+
+
+(define flipH (lambda (IMG)
+    (list (getWidth IMG) (getHeight IMG) (flipHAux (width IMG) 0 (elementsPix IMG)))
 ))
+
  
-(define invertFunc (lambda (element)
-    (if (= (car element) 1)
+(define flipHAux (lambda (i n L)
+   (if (= i 0)
+    (append (myMap2 newPosX n (myFilter2 posXVerification i  L)))
+    (append (myMap2 newPosX n (myFilter2 posXVerification i  L)) (flipHAux (- i 1) (+ n 1) L))
+   )
+))
+
+(define width (lambda (img)
+    (- (getWidth img) 1)
+))
+
+
+;; para filter2
+(define posXVerification (lambda (L i)
+    (if (= i (getPosX L))
         #t
         #f
     )
 ))
+
+;; para map
+(define newPosX (lambda (L n)
+   (pixbit-d n (getPosY L) (getBit L) (getDepth L))
+))
+
+
+
+
+
+
 
  
 
