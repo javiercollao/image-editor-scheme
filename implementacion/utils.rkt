@@ -36,6 +36,17 @@
     )   
 )
 
+(define myFilter3 (lambda (f x y L)
+        (if (null? L)
+            null
+            (if (f (car L) x y)
+                (cons (car L) (myFilter3 f x y (cdr L)))
+                (myFilter3 f x y (cdr L))
+            )
+        )
+    )   
+)
+
 ;; Descripción: retorna una lista de elementos donde a cada elemento se le aplica una operacion
 ;; Dom: funcionOperacion X lista
 ;; Rec: lista de elementos
@@ -56,6 +67,14 @@
         )
     )
 )
+
+;(define myMap3 (lambda (f L M)
+;            (if (null? L)
+;            null
+;            (cons (f (car L) M) (myMap3 f (cdr L) M))
+;        )
+;    )
+;)
 
 ;; Descripción: retorna un elemento que nace por una operacion que involucra a todos los elementos de una lista
 ;; Dom: funcionOperacion X lista

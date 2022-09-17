@@ -66,7 +66,7 @@
 ;; Descripción: función que permite determinar si la imagen corresponde a un pixrgb-d.
 ;; Dom: 
 ;; Rec: 
-;; Tipo de recursión: 
+;; Tipo de recursión: Cola
 
 (define pixmap? (lambda (imageList)
     (if (= 0 (length (pixmap?Aux1 imageList)))
@@ -91,7 +91,7 @@
 ;; Descripción: función que permite determinar si la imagen corresponde a un hexmap-d.
 ;; Dom: 
 ;; Rec:
-;; Tipo de recursión:
+;; Tipo de recursión: Cola
 
 (define hexmap? (lambda (imageList)
     (if (= 0 (length (hexmap?Aux1 imageList)))
@@ -166,9 +166,9 @@
 
 ;; flipH
 ;; Descripción: función que permite invertir una imágen horizontalmente.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión: 
+;; Dom: image (list)
+;; Rec: image (list)
+;; Tipo de recursión: Natural
 
 (define flipH (lambda (IMG)
     (imageList (getWidth IMG) (getHeight IMG) (flipHAux (width IMG) 0 (elementsPix IMG)))
@@ -189,7 +189,7 @@
     )
 ))
 
-;; Descripción: operación que modifica la coordenada X de 
+;; Descripción: operación que modifica la coordenada X  
 (define newPosX (lambda (L n)
     (if (pixbit-d? L)
         (pixbit-d n (getPosY L) (getBit L) (getDepth L))
@@ -203,12 +203,11 @@
     )
 ))
 
- 
 ;; flipV
 ;; Descripción: función que permite invertir una imágen verticalmente.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión:
+;; Dom: image (list)
+;; Rec: image (list)
+;; Tipo de recursión: Natural
 
 (define flipV (lambda (IMG)
     (imageList (getWidth IMG) (getHeight IMG) (flipVAux (height IMG) 0 (elementsPix IMG)))
@@ -229,7 +228,7 @@
     )
 ))
 
-;; Descripción: operación que modifica la coordenada Y de 
+;; Descripción: operación que modifica la coordenada Y 
 (define newPosY (lambda (L n)
     (if (pixbit-d? L)
         (pixbit-d (getPosX L) n (getBit L) (getDepth L))
@@ -243,14 +242,33 @@
     )
 ))
 
-
 ;; crop
 ;; Descripción: Recortar una imágen a partir de un cuadrante.
 ;; Dom: 
 ;; Rec:
-;; Tipo de recursión:
+;; Tipo de recursión: Natural
 
+;; arreglar width y height 
+(define crop (lambda (IMG x1 y1 x2 y2)
+    (if (and (= y1 y2) (<= x1 x2))
+        (imageList (- (getWidth IMG) x1) (- (getHeight IMG) y1) (cropAux (elementsPix IMG) x1 x2 y2))
+        null
+    )
+))
 
+(define cropAux (lambda (L x1 x2 y2)
+    (if (= x1 x2)
+        (append (myFilter3 findPix x2 y2 L) null )
+        (append (myFilter3 findPix x2 y2 L) (cropAux L x1 (- x2 1) y2) )
+    )
+))
+
+(define findPix (lambda (L x y)
+    (if (and (= x (getPosX L)) (<= (getPosY L) y) (>= (getPosY L) 0))
+        #t
+        #f
+    )
+))
 
 
 ;; imgRGB->imgHex
@@ -275,6 +293,9 @@
 ;; Rec:
 ;; Tipo de recursión:
 
+;(define rotate90 (lambda (IMG)
+;    (imageList (getWidth IMG) (getHeight IMG) (flipVAux (height IMG) 0 (elementsPix IMG)))
+;))
 
 ;; compress
 ;; Descripción: Comprime una imágen eliminando aquellos pixeles con el color más frecuente. La imagen comprimida resultante solo se puede manipular con las otras funciones una vez que haya sido descomprimida a partir de la función señalada más adelante.
