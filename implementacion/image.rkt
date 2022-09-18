@@ -248,10 +248,9 @@
 ;; Rec:
 ;; Tipo de recursión: Natural
 
-;; arreglar width y height 
 (define crop (lambda (IMG x1 y1 x2 y2)
     (if (and (= y1 y2) (<= x1 x2))
-        (imageList (- (getWidth IMG) x1) (- (getHeight IMG) y1) (cropAux (elementsPix IMG) x1 x2 y2))
+        (imageList (+ (- x2 x1) 1) (- (getHeight IMG) (- (height IMG) y2)) (resetPosition (cropAux (elementsPix IMG) x1 x2 y2) x1 x2))
         null
     )
 ))
@@ -263,6 +262,7 @@
     )
 ))
 
+;; Descripción: Es la condicion para encontrar un pix element
 (define findPix (lambda (L x y)
     (if (and (= x (getPosX L)) (<= (getPosY L) y) (>= (getPosY L) 0))
         #t
@@ -270,13 +270,74 @@
     )
 ))
 
+;; Descripción: Se encarga de reestablecer las coordenadas desde la posicion inicial 0, 0. Solo cuando el valor de x1 es distinto de 0.
+(define resetPosition (lambda (L x1 x2)
+    (if (= x1 0)
+        L
+        (resetPositionAux L x1 x2 0)
+    )
+))
+
+(define resetPositionAux (lambda (L x1 x2 n)
+    (if (= x1 x2)
+        (append (myMap2 newPosX n (myFilter2 posXVerification x1 L)) null)
+        (append (myMap2 newPosX n (myFilter2 posXVerification x1 L)) (resetPositionAux L (+ x1 1) x2 (+ n 1)))
+    )
+))
 
 ;; imgRGB->imgHex
 ;; Descripción: Transforma una imagen desde una representación RGB a una representación HEX.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión:
+;; Dom: image (list)
+;; Rec: image (list)
+;; Tipo de recursión: NA
 
+(define imgRGB->imgHex (lambda (IMG)
+    (if (pixmap? IMG)
+        (imageList (getWidth IMG) (getHeight IMG) (imgRGB->imgHexAux (elementsPix IMG)))
+        null
+    )
+))
+
+(define imgRGB->imgHexAux (lambda (L)
+    (myMap newHex L)
+))
+
+(define newHex (lambda (L)
+    (pixhex-d (getPosX L) (getPosY L) (converterRGBToHex (getR L) (getG L) (getB L)) (getDepth L)))
+)
+
+(define converterRGBToHex (lambda (r g b)
+    (string-append (toHex r) (toHex g) (toHex b))
+))
+
+(define toHex (lambda (color)
+   (string-append (hexNumber (remainder (quotient color 16) 16)) (hexNumber (remainder color 16)))
+))
+
+(define hexNumber (lambda (n)
+    (if (and (<= n 9) (>= n 0))
+        (toStringElement n)
+        (if (= n 10)
+            "A"
+            (if (= n 11)
+                "B"
+                (if (= n 12)
+                    "C"
+                    (if (= n 13)
+                        "D"
+                        (if (= n 14)
+                            "E"
+                            (if (= n 15)
+                                "F"
+                                null
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+))
 
 
 ;; histogram

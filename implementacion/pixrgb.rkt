@@ -79,9 +79,9 @@
 ;; Tipo de recursión: NA 
 
 (define pixrgb-d? (lambda (L)
-    (if (null? L)
-        #f
+    (if (= 6 (length L))
         (pixrgb-d?Aux (getPosX L) (getPosY L) (getR L) (getG L) (getB L) (getDepth-rgb L))
+        #f
     )
 ))
 

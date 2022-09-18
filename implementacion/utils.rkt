@@ -92,6 +92,7 @@
     )
 )
 
+
 ;; Descripción: retorna el primer elemento de la lista
 ;; Dom: list 
 ;; Rec: element
@@ -106,6 +107,17 @@
 
 (define firstElementRemove cdr)
 
+;; Descripción: Transforma un elemento entero a string
+;; Dom: x (int)
+;; Rec: x (str)
+;; Tipo de recursión: natural
+
+(define toStringElement (lambda (x)
+    (if (integer? x)
+        (~a x)
+        null
+    )
+))
 
 ;; Descripción: retorna el largo de un string
 

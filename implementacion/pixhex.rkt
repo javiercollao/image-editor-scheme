@@ -52,9 +52,9 @@
 ;; Tipo de recursión: NA 
 
 (define pixhex-d? (lambda (L)
-    (if (null? L)
-        #f
+    (if (string? (getHex L))
         (pixhex-d?Aux (getPosX L) (getPosY L) (getHex L) (getDepth L))
+        #f
     )
 ))
 
