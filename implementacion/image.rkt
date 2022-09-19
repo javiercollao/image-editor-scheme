@@ -306,6 +306,7 @@
     (pixhex-d (getPosX L) (getPosY L) (converterRGBToHex (getR L) (getG L) (getB L)) (getDepth L)))
 )
 
+;; Descripción: Se encarga de convertir rgb a hexadecimal
 (define converterRGBToHex (lambda (r g b)
     (string-append (toHex r) (toHex g) (toHex b))
 ))
@@ -314,6 +315,7 @@
    (string-append (hexNumber (remainder (quotient color 16) 16)) (hexNumber (remainder color 16)))
 ))
 
+;; Descripción: Se encarga de generar los numeros hexadecimales
 (define hexNumber (lambda (n)
     (if (and (<= n 9) (>= n 0))
         (toStringElement n)
@@ -339,7 +341,6 @@
     )
 ))
 
-
 ;; histogram
 ;; Descripción: Retorna un histograma de frecuencias a partir de los colores en cada una de las imágenes. Debe funcionar para bitmap-d, pixmap-d y hexmap-d.
 ;; Dom: 
@@ -354,9 +355,46 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-;(define rotate90 (lambda (IMG)
-;    (imageList (getWidth IMG) (getHeight IMG) (flipVAux (height IMG) 0 (elementsPix IMG)))
-;))
+(define rotate90 (lambda (IMG)
+    (flipV (imageList (getWidth IMG) (getHeight IMG) (append (rotate90Aux (height IMG) 0 (elementsPix IMG)) (myFilter notPosYAndPosXVerification (elementsPix IMG)))))
+))
+ 
+(define rotate90Aux (lambda (i n L)
+   (if (= i 0)
+    (append (myMap2 newPosXAndPosY n (myFilter2 posYAndPosXVerification i  L)))
+    (append (myMap2 newPosXAndPosY n (myFilter2 posYAndPosXVerification i  L)) (rotate90Aux (- i 1) (+ n 1) L))
+   )
+))
+
+;; Descripción: condición que verifica el valor de la coordenada X e Y
+(define posYAndPosXVerification (lambda (L i)
+    (if (and (= i (getPosY L)) (= i (getPosX L)) )
+        #t
+        #f
+    )
+))
+
+;; Descripción: condición que verifica el valor de la coordenada X e Y negado
+(define notPosYAndPosXVerification (lambda (L)
+    (if (not (= (getPosX L) (getPosY L)))
+        #t
+        #f
+    )
+))
+
+;; Descripción: operación que modifica la coordenada X e Y 
+(define newPosXAndPosY (lambda (L n)
+    (if (pixbit-d? L)
+        (pixbit-d n n (getBit L) (getDepth L))
+        (if (pixrgb-d? L)
+            (pixrgb-d n n (getR L) (getG L) (getB L) (getDepth L))
+            (if (pixhex-d? L)
+                (pixhex-d n n (getHex L) (getDepth L))
+                null
+            )
+        )
+    )
+))
 
 ;; compress
 ;; Descripción: Comprime una imágen eliminando aquellos pixeles con el color más frecuente. La imagen comprimida resultante solo se puede manipular con las otras funciones una vez que haya sido descomprimida a partir de la función señalada más adelante.
