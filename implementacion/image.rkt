@@ -347,12 +347,78 @@
 ;; Rec:
 ;; Tipo de recursión:
 
+(define histogram (lambda (IMG)
+    (if (bitmap? IMG)
+        (histogramBit (elementsPix IMG) 1)
+        (if (pixmap? IMG)
+            (histogramRgb (myMap colorsRgb (elementsPix IMG)) (firstElement (myMap colorsRgb (elementsPix IMG))))
+            null
+        ;    (if (hexmap? IMG)
+        ;        (histogramHex (elementsPix IMG) 255)
+        ;        null
+        ;    )
+        )
+    )
+))
+
+(define histogramBit (lambda (L i)
+    (if (= i 0)
+        (cons (list i (length (myFilter2 bitColorVerification i L))) null)
+        (cons (list i (length (myFilter2 bitColorVerification i L))) (histogramBit L (- i 1)))
+    )
+))
+
+(define bitColorVerification (lambda (L i)
+    (if (= i (getBit L))
+        #t
+        #f
+    )
+))
+
+
+(define histogramRgb (lambda (L element)
+    (if (null? L)
+        (cons element 1)
+        (cons element  (histogramRgb (myFilter2 notRgb) (firstElement (myFilter2 L))))
+    )
+    
+))
+
+(define notRgb (lambda (L)
+    (if (not (= (getPosX L) (getPosY L)))
+        #t
+        #f
+    )
+))
+
+(define verificationRgb (lambda (L element)
+    (if (equal? L element)
+        #t
+        #f
+    )
+))
+
+(define colorsRgb (lambda (L)
+    (if (null? L)
+        null
+        (list (getR L) (getG L) (getB L))
+    )
+))
+
+ 
+
+
+
+;
+;(define histogramHex (lambda (L)
+;))
+
 
 
 ;; rotate90
 ;; Descripción: rota la imágen 90° a la derecha.
-;; Dom: 
-;; Rec:
+;; Dom: image (list)
+;; Rec: image (list)
 ;; Tipo de recursión:
 
 (define rotate90 (lambda (IMG)
