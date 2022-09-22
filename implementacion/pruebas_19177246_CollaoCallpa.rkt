@@ -41,6 +41,8 @@
 
 (define img3 (image 2 2 (pixbit-d 0 0 1 10)(pixbit-d 0 1 0 20)(pixbit-d 0 2 0 30) (pixbit-d 1 0 1 4) (pixbit-d 1 1 0 3) (pixbit-d 1 2 1 4) (pixbit-d 2 0 1 4) (pixbit-d 2 1 0 5) (pixbit-d 2 2 0 4)))
 
+(define img4 (image 4 4 (pixrgb-d 0 0 10 10 10 10)(pixrgb-d 0 1 20 20 20 20) (pixrgb-d 0 2 10 10 10 10) (pixrgb-d 0 3 10 10 10 10) (pixrgb-d 1 0 30 30 30 30)  (pixrgb-d 1 1 40 40 40 40) (pixrgb-d 1 2 30 30 30 30) (pixrgb-d 1 3 30 30 30 30) (pixrgb-d 0 2 30 30 30 30)  (pixrgb-d 1 2 30 30 30 30) (pixrgb-d 2 2 30 30 30 30) (pixrgb-d 3 2 30 30 30 30) (pixrgb-d 0 3 30 30 30 30) (pixrgb-d 1 3 30 30 30 30) (pixrgb-d 2 3 30 30 30 30) (pixrgb-d 3 3 30 30 30 30)))
+
 ;; FlipH
 
 ;(flipH img2)

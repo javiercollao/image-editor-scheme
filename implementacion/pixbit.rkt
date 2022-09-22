@@ -78,9 +78,9 @@
 ;; Tipo de recursión: NA 
 
 (define pixbit-d? (lambda (L)
-    (if (null? L)
-        #f
+    (if (integer? (getBit L))
         (pixbit-d?Aux (getPosX L) (getPosY L) (getBit L) (getDepth L))
+        #f
     )
 ))
 

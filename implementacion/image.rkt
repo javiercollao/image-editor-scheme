@@ -352,11 +352,10 @@
         (histogramBit (elementsPix IMG) 1)
         (if (pixmap? IMG)
             (histogramRgb (myMap colorsRgb (elementsPix IMG)) (firstElement (myMap colorsRgb (elementsPix IMG))))
-            null
-        ;    (if (hexmap? IMG)
-        ;        (histogramHex (elementsPix IMG) 255)
-        ;        null
-        ;    )
+            (if (hexmap? IMG)
+                (histogramHex (myMap colorsHex (elementsPix IMG)) (firstElement (myMap colorsHex (elementsPix IMG))))
+                null
+            )
         )
     )
 ))
@@ -375,17 +374,15 @@
     )
 ))
 
-
 (define histogramRgb (lambda (L element)
-    (if (null? L)
-        (cons element 1)
-        (cons element  (histogramRgb (myFilter2 notRgb) (firstElement (myFilter2 L))))
+    (if (= (length L) 1)
+        (cons (list element 1) null)
+        (cons (list element (length (myFilter2 verificationRgb element L)))  (histogramRgb (myFilter2 notRgb element L) (firstElement (myFilter2 notRgb element L))) )
     )
-    
 ))
 
-(define notRgb (lambda (L)
-    (if (not (= (getPosX L) (getPosY L)))
+(define notRgb (lambda (L element)
+    (if (not (equal? L element))
         #t
         #f
     )
@@ -405,15 +402,44 @@
     )
 ))
 
- 
 
-
-
-;
-;(define histogramHex (lambda (L)
+;(define histogramHex (lambda (L element)
+;    (if (= (length L) 1)
+;        (cons (list (firstElement element) 1) null)
+;        (cons (list (firstElement element) (length (myFilter2 verificationHex (firstElement element) L)))  (histogramHex (myFilter2 notHex (firstElement element) L) (firstElement (myFilter2 notHex (firstElement element) L))) )
+;    )
 ;))
 
+(define histogramHex (lambda (L element)
+    (if (= (length L) 1)
+        (cons (list element 1) null)
+        (cons (list element (length (myFilter2 verificationHex element L)))  (histogramHex (myFilter2 notHex element L) (firstElement (myFilter2 notHex element L))) )
+    )
+))
 
+(define colorsHex (lambda (L)
+    (if (null? L)
+        null
+        (getHex L)
+    )
+))
+
+(define notHex (lambda (L element)
+    (if (not (equal? L element))
+        #t
+        #f
+    )
+))
+
+(define verificationHex (lambda (L element)
+    (if (equal? L element)
+        #t
+        #f
+    )
+))
+
+; (define img5 (imgRGB->imgHex img4))
+; (myMap colorsHex (elementsPix img5))
 
 ;; rotate90
 ;; Descripción: rota la imágen 90° a la derecha.
