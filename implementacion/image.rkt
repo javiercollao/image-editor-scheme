@@ -367,6 +367,7 @@
     )
 ))
 
+;; Descripción: verifica si 2 colores bit son iguales
 (define bitColorVerification (lambda (L i)
     (if (= i (getBit L))
         #t
@@ -381,6 +382,7 @@
     )
 ))
 
+;; Descripción: verifica si 2 colores RGB no son iguales
 (define notRgb (lambda (L element)
     (if (not (equal? L element))
         #t
@@ -388,6 +390,7 @@
     )
 ))
 
+;; Descripción: verifica si 2 colores RGB son iguales
 (define verificationRgb (lambda (L element)
     (if (equal? L element)
         #t
@@ -395,20 +398,13 @@
     )
 ))
 
+;; Descripción: operación de buscar los colores R G B de un pixrgb
 (define colorsRgb (lambda (L)
     (if (null? L)
         null
         (list (getR L) (getG L) (getB L))
     )
 ))
-
-
-;(define histogramHex (lambda (L element)
-;    (if (= (length L) 1)
-;        (cons (list (firstElement element) 1) null)
-;        (cons (list (firstElement element) (length (myFilter2 verificationHex (firstElement element) L)))  (histogramHex (myFilter2 notHex (firstElement element) L) (firstElement (myFilter2 notHex (firstElement element) L))) )
-;    )
-;))
 
 (define histogramHex (lambda (L element)
     (if (= (length L) 1)
@@ -417,6 +413,7 @@
     )
 ))
 
+;; Descripción: operación de buscar los colores hexadecimales de un pixhex
 (define colorsHex (lambda (L)
     (if (null? L)
         null
@@ -424,6 +421,7 @@
     )
 ))
 
+;; Descripción: verifica si 2 elementos hexadecimales no son iguales
 (define notHex (lambda (L element)
     (if (not (equal? L element))
         #t
@@ -431,6 +429,7 @@
     )
 ))
 
+;; Descripción: verifica si 2 elementos hexadecimales son iguales
 (define verificationHex (lambda (L element)
     (if (equal? L element)
         #t
@@ -493,6 +492,77 @@
 ;; Dom: 
 ;; Rec:
 ;; Tipo de recursión:
+
+(define compress (lambda (IMG)
+    (if (bitmap? IMG)
+        (list (imageList (getWidth IMG) (getHeight IMG) (myFilter2 verificationBitFrecuency (mostFrecuencyColor IMG) (elementsPix IMG))) (mostFrecuencyColor IMG) (myMap depthInfo (myFilter2 verificationFrecuencyAux (mostFrecuencyColor IMG) (elementsPix IMG))))
+        (if (pixmap? IMG)
+            (list (imageList (getWidth IMG) (getHeight IMG) (myFilter2 verificationRgbFrecuency (mostFrecuencyColor IMG) (elementsPix IMG))) (mostFrecuencyColor IMG) (myMap depthInfo (myFilter2 verificationFrecuencyAux (mostFrecuencyColor IMG) (elementsPix IMG))))
+            (if (hexmap? IMG)
+                (list (imageList (getWidth IMG) (getHeight IMG) (myFilter2 verificationHexFrecuency (mostFrecuencyColor IMG) (elementsPix IMG))) (mostFrecuencyColor IMG) (myMap depthInfo (myFilter2 verificationFrecuencyAux (mostFrecuencyColor IMG) (elementsPix IMG))))
+                null
+            )
+        )
+    )
+))
+
+(define mostFrecuencyColor (lambda (IMG)
+    (firstElement (firstElement (myFilter2  findPixelInfoByFrecuency (mostFrecuencyNumber IMG) (histogram IMG))))
+))
+
+(define mostFrecuencyNumber (lambda (IMG)
+    (firstElement (sort (myMap frecuencyListGenerator (histogram IMG)) >))
+))
+
+;; Descripción: operación de buscar frecuencias de color
+(define frecuencyListGenerator (lambda (L)
+    (if (null? L)
+        null
+        (firstElement (firstElementRemove L))
+    )
+))
+
+(define findPixelInfoByFrecuency (lambda (L i)
+    (if (= (firstElement (firstElementRemove L)) i)
+        #t
+        #f
+    )
+))
+
+(define verificationBitFrecuency (lambda (L i)
+    (if (not (= (getBit L) i))
+        #t
+        #f
+    )
+))
+
+(define verificationRgbFrecuency (lambda (L i)
+    (if (not (equal? (list (getR L) (getG L) (getB L)) i))
+        #t
+        #f
+    )
+))
+
+(define verificationHexFrecuency (lambda (L i)
+    (if (not (equal? (getHex L) i))
+        #t
+        #f
+    )
+))
+
+(define verificationFrecuencyAux (lambda (L i)
+    (if (equal? (getHex L) i)
+        #t
+        #f
+    )
+))
+
+(define depthInfo (lambda (L)
+    (if (null? L)
+        null
+        (getDepth L)
+    )
+))
 
 
 
