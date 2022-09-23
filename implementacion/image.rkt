@@ -639,10 +639,7 @@
 ;; Tipo de recursión:  
 
 (define decompress (lambda (IMGC)
-    (decompressAux (createPixelPosition IMGC) (colorOfPixelsDeleted IMGC) (depthsOfPixelsDeleted IMGC) (length (createPixelPosition IMGC)))
-    ;(coordinateGenerator (compressedImage IMGC))
-    ;(myMap coordinatesImagec (elementsPix (compressedImage IMGC)))
-    ;(compressedImage IMGC)
+    (imageList (getWidth (compressedImage IMGC)) (getHeight (compressedImage IMGC))  (append (elementsPix (compressedImage IMGC)) (decompressAux (createPixelPosition IMGC) (colorOfPixelsDeleted IMGC) (depthsOfPixelsDeleted IMGC) (length (createPixelPosition IMGC)))))
 ))
 
 (define decompressAux (lambda (pixelPositions pixelColor depthsOfPixels i)
