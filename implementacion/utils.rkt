@@ -100,6 +100,15 @@
 
 (define firstElement car)
 
+;; Descripción: retorna el ultimo elemento de la lista
+;; Dom: list 
+;; Rec: element
+;; Tipo de recursión: NA
+
+(define lastElement (lambda (L)
+    (car (reverse L))
+))
+
 ;; Descripción: elimina el primer elemento de la lista
 ;; Dom: list 
 ;; Rec: element

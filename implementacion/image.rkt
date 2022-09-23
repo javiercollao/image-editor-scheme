@@ -495,11 +495,11 @@
 
 (define compress (lambda (IMG)
     (if (bitmap? IMG)
-        (list (imageList (getWidth IMG) (getHeight IMG) (myFilter2 verificationBitFrecuency (mostFrecuencyColor IMG) (elementsPix IMG))) (mostFrecuencyColor IMG) (myMap depthInfo (myFilter2 verificationFrecuencyAux (mostFrecuencyColor IMG) (elementsPix IMG))))
+        (list (imageList (getWidth IMG) (getHeight IMG) (myFilter2 verificationBitFrecuency (mostFrecuencyColor IMG) (elementsPix IMG))) (mostFrecuencyColor IMG) (myMap depthInfo (myFilter2 verificationBitFrecuencyAux (mostFrecuencyColor IMG) (elementsPix IMG))))
         (if (pixmap? IMG)
-            (list (imageList (getWidth IMG) (getHeight IMG) (myFilter2 verificationRgbFrecuency (mostFrecuencyColor IMG) (elementsPix IMG))) (mostFrecuencyColor IMG) (myMap depthInfo (myFilter2 verificationFrecuencyAux (mostFrecuencyColor IMG) (elementsPix IMG))))
+            (list (imageList (getWidth IMG) (getHeight IMG) (myFilter2 verificationRgbFrecuency (mostFrecuencyColor IMG) (elementsPix IMG))) (mostFrecuencyColor IMG) (myMap depthInfo (myFilter2 verificationRgbFrecuencyAux (mostFrecuencyColor IMG) (elementsPix IMG))))
             (if (hexmap? IMG)
-                (list (imageList (getWidth IMG) (getHeight IMG) (myFilter2 verificationHexFrecuency (mostFrecuencyColor IMG) (elementsPix IMG))) (mostFrecuencyColor IMG) (myMap depthInfo (myFilter2 verificationFrecuencyAux (mostFrecuencyColor IMG) (elementsPix IMG))))
+                (list (imageList (getWidth IMG) (getHeight IMG) (myFilter2 verificationHexFrecuency (mostFrecuencyColor IMG) (elementsPix IMG))) (mostFrecuencyColor IMG) (myMap depthInfo (myFilter2 verificationHexFrecuencyAux (mostFrecuencyColor IMG) (elementsPix IMG))))
                 null
             )
         )
@@ -536,8 +536,22 @@
     )
 ))
 
+(define verificationBitFrecuencyAux (lambda (L i)
+    (if (= (getBit L) i)
+        #t
+        #f
+    )
+))
+
 (define verificationRgbFrecuency (lambda (L i)
     (if (not (equal? (list (getR L) (getG L) (getB L)) i))
+        #t
+        #f
+    )
+))
+
+(define verificationRgbFrecuencyAux (lambda (L i)
+    (if (equal? (list (getR L) (getG L) (getB L)) i)
         #t
         #f
     )
@@ -550,7 +564,7 @@
     )
 ))
 
-(define verificationFrecuencyAux (lambda (L i)
+(define verificationHexFrecuencyAux (lambda (L i)
     (if (equal? (getHex L) i)
         #t
         #f
@@ -564,15 +578,14 @@
     )
 ))
 
-
-
 ;; edit
 ;; Descripción: Permite aplicar funciones especiales a las imágenes. Por ejemplo, para modificar colores en alguno de los canales, pasar a blanco y negro, etc.
 ;; Dom: 
 ;; Rec:
 ;; Tipo de recursión:
 
-
+;(define edit (lambda (L)
+;))
 
 ;; invertColorBit
 ;; Descripción: Función que permite obtener el valor del bit opuesto.
@@ -580,6 +593,8 @@
 ;; Rec:
 ;; Tipo de recursión:
 
+;(define invertColorBit (lambda (L)
+;))
 
 ;; invertColorRGB
 ;; Descripción: Función que permite obtener el color simétricamente opuesto en cada canal dentro de un pixel.
@@ -587,7 +602,8 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-
+;(define invertColorRGB (lambda (L)
+;))
 
 ;; adjustChannel
 ;; Descripción: Función que permite ajustar cualquier canal de una imagen con pixeles pixrgb-d, incluido el canal de profundidad d. Se asume que la función que modificará el canal produce valores dentro del rango válido.
@@ -595,7 +611,8 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-
+;(define adjustChannel (lambda (L)
+;))
 
 ;; image->string
 ;; Descripción: Función que transforma una imagen a una representación string. La transformación depende de si la imagen es bitmap-d, hexmap-d o pixmap-d, para lo cual se pasa la función de transformación correspondiente.
@@ -603,8 +620,8 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-
-
+;(define image->string (lambda (L)
+;))
 
 ;; depthLayers
 ;; Descripción: Función que permite separar una imágen en capas en base a la profundidad en que se sitúan los pixeles. El resultado consiste en una lista de imágenes donde cada una agrupa los píxeles que se sitúan en el mismo nivel de profundidad. Además, en las imágenes resultantes se sustituyen los píxeles que se encuentran en otro nivel de profundidad por píxeles blancos (255,255,255).
@@ -612,7 +629,8 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-
+;(define depthLayers (lambda (L)
+;))
 
 ;; decompress
 ;; Descripción: Función que permite descomprimir una imágen comprimida. Para esto se toma como referencia el color más frecuente a fin de reconstruir todos los píxeles que fueron eliminados en la compresión.
@@ -620,5 +638,96 @@
 ;; Rec:
 ;; Tipo de recursión:  
 
+(define decompress (lambda (IMGC)
+    (decompressAux (createPixelPosition IMGC) (colorOfPixelsDeleted IMGC) (depthsOfPixelsDeleted IMGC) (length (createPixelPosition IMGC)))
+    ;(coordinateGenerator (compressedImage IMGC))
+    ;(myMap coordinatesImagec (elementsPix (compressedImage IMGC)))
+    ;(compressedImage IMGC)
+))
 
+(define decompressAux (lambda (pixelPositions pixelColor depthsOfPixels i)
+    (if (= i 0)
+        null
+        (cons (flatten (list (firstElement pixelPositions) pixelColor (firstElement depthsOfPixels))) (decompressAux (firstElementRemove pixelPositions) pixelColor (firstElementRemove depthsOfPixels) (- i 1)))
+    )
+))
+
+(define createPixelPosition (lambda (IMGC)
+    (myMap positionsPixel (myFilter2 findPositions 0 (missingElements IMGC)))
+))
+
+(define positionsPixel (lambda (L)
+    (firstElement L)
+))
+
+(define findPositions (lambda (L i)
+    (if (= (lastElement L) i)
+        #t
+        #f
+    )
+))
+
+
+(define missingElements (lambda (IMGC)
+    (missingCoordinates (coordinateGenerator (compressedImage IMGC)) (myMap coordinatesImagec (elementsPix (compressedImage IMGC))))
+))
+
+
+(define missingCoordinates (lambda (L L2)
+    (if (= (length L) 1)
+        (cons (list (firstElement L) (length (myFilter2 missingAux (firstElement L) L2))) null)
+        (cons (list (firstElement L) (length (myFilter2 missingAux (firstElement L) L2))) (missingCoordinates (firstElementRemove L) (myFilter2 missingNotAux (firstElement L) L2)))
+    )
+))
+
+(define depthsOfPixelsDeleted (lambda (IMGC)
+    (lastElement (firstElementRemove IMGC))
+))
+
+(define colorOfPixelsDeleted (lambda (IMGC)
+    (firstElement (firstElementRemove IMGC))
+))
+
+(define compressedImage (lambda (IMGC)
+    (firstElement IMGC)
+))
+
+(define coordinateGenerator (lambda (IMG)
+    (reverse (row (width IMG) (height IMG)))
+))
+
+(define row (lambda (j i)
+    (if (= 0 j)
+        (append (column i j) null)
+        (append (column i j) (row (- j 1) i))
+    )
+))
+
+(define column (lambda (i j)
+    (if (= i 0)
+        (cons (list i j) null)
+        (cons (list i j) (column (- i 1) j))    
+    )  
+))
+
+(define coordinatesImagec (lambda (L)
+    (if (null? L)
+        null
+        (list (getPosX L) (getPosY L))
+    )
+))
+
+(define missingNotAux (lambda (L i)
+    (if (not (equal? L i))
+        #t
+        #f
+    )
+))
+
+(define missingAux (lambda (L i)
+    (if (equal? L i)
+        #t
+        #f
+    )
+))
 
