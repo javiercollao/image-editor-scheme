@@ -664,11 +664,9 @@
     )
 ))
 
-
 (define missingElements (lambda (IMGC)
     (missingCoordinates (coordinateGenerator (compressedImage IMGC)) (myMap coordinatesImagec (elementsPix (compressedImage IMGC))))
 ))
-
 
 (define missingCoordinates (lambda (L L2)
     (if (= (length L) 1)
@@ -693,17 +691,17 @@
     (reverse (row (width IMG) (height IMG)))
 ))
 
-(define row (lambda (j i)
-    (if (= 0 j)
-        (append (column i j) null)
-        (append (column i j) (row (- j 1) i))
+(define row (lambda (x y)
+    (if (= 0 x)
+        (append (column x y) null)
+        (append (column x y) (row (- x 1) y))
     )
 ))
 
-(define column (lambda (i j)
-    (if (= i 0)
-        (cons (list i j) null)
-        (cons (list i j) (column (- i 1) j))    
+(define column (lambda (x y)
+    (if (= y 0)
+        (cons (list x y) null)
+        (cons (list x y) (column x (- y 1)))    
     )  
 ))
 
