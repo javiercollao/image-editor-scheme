@@ -625,12 +625,86 @@
 
 ;; depthLayers
 ;; Descripción: Función que permite separar una imágen en capas en base a la profundidad en que se sitúan los pixeles. El resultado consiste en una lista de imágenes donde cada una agrupa los píxeles que se sitúan en el mismo nivel de profundidad. Además, en las imágenes resultantes se sustituyen los píxeles que se encuentran en otro nivel de profundidad por píxeles blancos (255,255,255).
-;; Dom: 
+;; Dom: img
 ;; Rec:
 ;; Tipo de recursión:
 
-;(define depthLayers (lambda (L)
-;))
+(define depthLayers (lambda (IMG)
+    ;(pixelsByDepth IMG)
+    (myMap depthLayersGenerator (pixelsByDepth IMG))
+))
+
+(define createPixelPositionLayers (lambda (IMG)
+    (myMap positionsPixel (myFilter2 findPositions 0 (depthLayersAux IMG)))
+))
+
+(define depthLayersAux (lambda (IMG)
+    (missingCoordinates (coordinateGenerator IMG) (myMap coordinatesImagec (elementsPix IMG)))
+))
+
+(define depthLayersAux2 (lambda (pixelPositions pixelColor depthsOfPixels i)
+    (if (= i 0)
+        null
+        (cons (flatten (list (firstElement pixelPositions) pixelColor (firstElement depthsOfPixels))) (depthLayersAux2 (firstElementRemove pixelPositions) pixelColor (firstElementRemove depthsOfPixels) (- i 1)))
+    )
+))
+
+(define depthLayersGenerator (lambda (L)
+    (imageList (getWidth L) (getHeight L)  (append (elementsPix L) (depthLayersAux2 (createPixelPositionLayers L) (list 0 0 0) 0 (length (createPixelPositionLayers L)))))
+))
+
+(define pixelsByDepth (lambda (IMG)
+   (pixelsByDepthAux IMG (depthsOfAllPixels IMG) (elementsPix IMG))
+))
+
+(define pixelsByDepthAux (lambda (IMG L L2)
+    (if (= (length L) 1)
+        (cons (imageList (getWidth IMG) (getHeight IMG) (myFilter2 compareDepth (firstElement L) L2)) null)
+        (cons (imageList (getWidth IMG) (getHeight IMG) (myFilter2 compareDepth (firstElement L) L2)) (pixelsByDepthAux IMG (myFilter2 compareElementInNegation (firstElement L) L) (myFilter2 compareDepthInNegation (firstElement L) L2)))
+    )
+))
+
+ 
+(define depthsOfAllPixels (lambda (L)
+    (myMap firstElement (depthsAgrupation (myMap returnDepths (elementsPix L)) (elementsPix L)))
+))
+
+(define returnDepths (lambda (pixel)
+    (if (null? pixel)
+        null
+        (getDepth pixel)
+    )
+))
+
+(define depthsAgrupation (lambda (L L2)
+    (if (= (length L) 1)
+        (cons (list (firstElement L) (length (myFilter2 compareDepth (firstElement L) L2))) null)
+        (cons (list (firstElement L) (length (myFilter2 compareDepth (firstElement L) L2))) (depthsAgrupation (myFilter2 compareElementInNegation (firstElement L) L) (myFilter2 compareDepthInNegation (firstElement L) L2)))
+    )
+))
+
+(define compareDepthInNegation (lambda (L i)
+    (if (not (equal? (getDepth L) i))
+        #t
+        #f
+    )
+))
+
+(define compareDepth (lambda (L i)
+    (if (equal? (getDepth L) i)
+        #t
+        #f
+    )
+))
+
+(define compareElementInNegation (lambda (L i)
+    (if (not (equal? L i))
+        #t
+        #f
+    )
+))
+
+
 
 ;; decompress
 ;; Descripción: Función que permite descomprimir una imágen comprimida. Para esto se toma como referencia el color más frecuente a fin de reconstruir todos los píxeles que fueron eliminados en la compresión.
@@ -649,6 +723,7 @@
     )
 ))
 
+;; Descripción: a partir de 
 (define createPixelPosition (lambda (IMGC)
     (myMap positionsPixel (myFilter2 findPositions 0 (missingElements IMGC)))
 ))
@@ -675,22 +750,27 @@
     )
 ))
 
+;; Descripción: a partir de la imagen comprimida extrae la data del las profundidades de los pixeles borrados
 (define depthsOfPixelsDeleted (lambda (IMGC)
     (lastElement (firstElementRemove IMGC))
 ))
 
+;; Descripción: a partir de la imagen comprimida extrae la data del color de los pixeles borrados
 (define colorOfPixelsDeleted (lambda (IMGC)
     (firstElement (firstElementRemove IMGC))
 ))
 
+;; Descripción: a partir de la imagen comprimida extrae la data de la imagen sin los pixeles borrados
 (define compressedImage (lambda (IMGC)
     (firstElement IMGC)
 ))
 
+;; Descripción: a partir de una imagen con los pixeles borrados genera las coordenadas que deberia tener la imagen descomprimida
 (define coordinateGenerator (lambda (IMG)
     (reverse (row (width IMG) (height IMG)))
 ))
 
+;; Descripción: se encarga de generar coordenadas de una imagen
 (define row (lambda (x y)
     (if (= 0 x)
         (append (column x y) null)
@@ -705,6 +785,7 @@
     )  
 ))
 
+;; Descripción: retorna las coordenadas de un pixel
 (define coordinatesImagec (lambda (L)
     (if (null? L)
         null
@@ -712,6 +793,7 @@
     )
 ))
 
+;; Descripción: Compara dos coordenadas verificando que NO son iguales
 (define missingNotAux (lambda (L i)
     (if (not (equal? L i))
         #t
@@ -719,6 +801,7 @@
     )
 ))
 
+;; Descripción: Compara dos coordenadas verificando que son iguales
 (define missingAux (lambda (L i)
     (if (equal? L i)
         #t
