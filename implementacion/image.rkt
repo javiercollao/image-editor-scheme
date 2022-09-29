@@ -584,8 +584,9 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-;(define edit (lambda (L)
-;))
+(define edit (lambda (IMG)
+    (imageList (getWidth IMG) (getHeight IMG) (myMap invertColorBit (elementsPix IMG)))
+))
 
 ;; invertColorBit
 ;; Descripción: Función que permite obtener el valor del bit opuesto.
@@ -593,8 +594,7 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-;(define invertColorBit (lambda (L)
-;))
+
 
 ;; invertColorRGB
 ;; Descripción: Función que permite obtener el color simétricamente opuesto en cada canal dentro de un pixel.
@@ -626,11 +626,10 @@
 ;; depthLayers
 ;; Descripción: Función que permite separar una imágen en capas en base a la profundidad en que se sitúan los pixeles. El resultado consiste en una lista de imágenes donde cada una agrupa los píxeles que se sitúan en el mismo nivel de profundidad. Además, en las imágenes resultantes se sustituyen los píxeles que se encuentran en otro nivel de profundidad por píxeles blancos (255,255,255).
 ;; Dom: img
-;; Rec:
-;; Tipo de recursión:
+;; Rec: lista de imagenes
+;; Tipo de recursión: Natural
 
-(define depthLayers (lambda (IMG)
-    ;(pixelsByDepth IMG)
+(define depthLayers (lambda (IMG) 
     (myMap depthLayersGenerator (pixelsByDepth IMG))
 ))
 
@@ -662,10 +661,6 @@
     (missingCoordinates (coordinateGenerator IMG) (myMap coordinatesImagec (elementsPix IMG)))
 ))
 
-
-
-
-
 (define pixelsByDepth (lambda (IMG)
    (pixelsByDepthAux IMG (depthsOfAllPixels IMG) (elementsPix IMG))
 ))
@@ -676,7 +671,6 @@
         (cons (imageList (getWidth IMG) (getHeight IMG) (myFilter2 compareDepth (firstElement L) L2)) (pixelsByDepthAux IMG (myFilter2 compareElementInNegation (firstElement L) L) (myFilter2 compareDepthInNegation (firstElement L) L2)))
     )
 ))
-
  
 (define depthsOfAllPixels (lambda (L)
     (myMap firstElement (depthsAgrupation (myMap returnDepths (elementsPix L)) (elementsPix L)))
@@ -716,8 +710,6 @@
         #f
     )
 ))
-
-
 
 ;; decompress
 ;; Descripción: Función que permite descomprimir una imágen comprimida. Para esto se toma como referencia el color más frecuente a fin de reconstruir todos los píxeles que fueron eliminados en la compresión.
