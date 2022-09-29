@@ -594,7 +594,18 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-
+(define invertColorBit (lambda (L)
+    (if (pixbit-d? L)
+        (if (= (getBit L) 0)
+            (pixbit-d (getPosX L) (getPosY L) 1 (getDepth L))
+            (if (= (getBit L) 1)
+                (pixbit-d (getPosX L) (getPosY L) 0 (getDepth L))
+                null
+            )
+        )
+        L
+    )
+))
 
 ;; invertColorRGB
 ;; Descripción: Función que permite obtener el color simétricamente opuesto en cada canal dentro de un pixel.
