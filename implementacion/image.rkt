@@ -634,6 +634,26 @@
     (myMap depthLayersGenerator (pixelsByDepth IMG))
 ))
 
+(define depthLayersGenerator (lambda (L)
+    (if (bitmap? L)
+        (imageList (getWidth L) (getHeight L)  (append (elementsPix L) (depthLayersAux2 (createPixelPositionLayers L) 0 (getDepth (firstElement (elementsPix L))) (length (createPixelPositionLayers L)))))
+        (if (pixmap? L)
+            (imageList (getWidth L) (getHeight L)  (append (elementsPix L) (depthLayersAux2 (createPixelPositionLayers L) (list 0 0 0) (getDepth (firstElement (elementsPix L))) (length (createPixelPositionLayers L)))))
+            (if (hexmap? L)
+                (imageList (getWidth L) (getHeight L)  (append (elementsPix L) (depthLayersAux2 (createPixelPositionLayers L) "FFFFFF" (getDepth (firstElement (elementsPix L))) (length (createPixelPositionLayers L)))))
+                null
+            )
+        )
+    ) 
+))
+
+(define depthLayersAux2 (lambda (pixelPositions pixelColor depthsOfPixels i)
+    (if (= i 0)
+        null
+        (cons (flatten (list (firstElement pixelPositions) pixelColor depthsOfPixels )) (depthLayersAux2 (firstElementRemove pixelPositions) pixelColor depthsOfPixels (- i 1)))
+    )
+))
+
 (define createPixelPositionLayers (lambda (IMG)
     (myMap positionsPixel (myFilter2 findPositions 0 (depthLayersAux IMG)))
 ))
@@ -642,16 +662,9 @@
     (missingCoordinates (coordinateGenerator IMG) (myMap coordinatesImagec (elementsPix IMG)))
 ))
 
-(define depthLayersAux2 (lambda (pixelPositions pixelColor depthsOfPixels i)
-    (if (= i 0)
-        null
-        (cons (flatten (list (firstElement pixelPositions) pixelColor (firstElement depthsOfPixels))) (depthLayersAux2 (firstElementRemove pixelPositions) pixelColor (firstElementRemove depthsOfPixels) (- i 1)))
-    )
-))
 
-(define depthLayersGenerator (lambda (L)
-    (imageList (getWidth L) (getHeight L)  (append (elementsPix L) (depthLayersAux2 (createPixelPositionLayers L) (list 0 0 0) 0 (length (createPixelPositionLayers L)))))
-))
+
+
 
 (define pixelsByDepth (lambda (IMG)
    (pixelsByDepthAux IMG (depthsOfAllPixels IMG) (elementsPix IMG))
