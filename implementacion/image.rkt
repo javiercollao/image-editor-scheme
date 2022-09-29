@@ -584,8 +584,8 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-(define edit (lambda (IMG)
-    (imageList (getWidth IMG) (getHeight IMG) (myMap invertColorBit (elementsPix IMG)))
+(define edit (lambda (f IMG)
+    (imageList (getWidth IMG) (getHeight IMG) (myMap f (elementsPix IMG)))
 ))
 
 ;; invertColorBit
@@ -613,8 +613,12 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-;(define invertColorRGB (lambda (L)
-;))
+(define invertColorRGB (lambda (L)
+    (if (pixrgb-d? L)
+        (pixrgb-d (getPosX L) (getPosY L) (- 255 (getR L)) (- 255 (getG L)) (- 255 (getB L)) (getDepth L))
+        L
+    )
+))
 
 ;; adjustChannel
 ;; Descripción: Función que permite ajustar cualquier canal de una imagen con pixeles pixrgb-d, incluido el canal de profundidad d. Se asume que la función que modificará el canal produce valores dentro del rango válido.
