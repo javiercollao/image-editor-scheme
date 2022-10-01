@@ -580,9 +580,9 @@
 
 ;; edit
 ;; Descripción: Permite aplicar funciones especiales a las imágenes. Por ejemplo, para modificar colores en alguno de los canales, pasar a blanco y negro, etc.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión:
+;; Dom: f (función) , image (list)
+;; Rec: image (list)
+;; Tipo de recursión: De cola
 
 (define edit (lambda (f IMG)
     (imageList (getWidth IMG) (getHeight IMG) (myMap f (elementsPix IMG)))
@@ -590,9 +590,9 @@
 
 ;; invertColorBit
 ;; Descripción: Función que permite obtener el valor del bit opuesto.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión:
+;; Dom: pixbit-d (list)
+;; Rec: pixbit-d (list)
+;; Tipo de recursión: NA
 
 (define invertColorBit (lambda (L)
     (if (pixbit-d? L)
@@ -609,9 +609,9 @@
 
 ;; invertColorRGB
 ;; Descripción: Función que permite obtener el color simétricamente opuesto en cada canal dentro de un pixel.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión:
+;; Dom: pixrgb-d (list)
+;; Rec: pixrgb-d (list)
+;; Tipo de recursión: NA
 
 (define invertColorRGB (lambda (L)
     (if (pixrgb-d? L)
@@ -627,6 +627,7 @@
 ;; Tipo de recursión:
 
 ;(define adjustChannel (lambda (L)
+
 ;))
 
 ;; image->string
@@ -635,7 +636,26 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-;(define image->string (lambda (L)
+;(define image->string (lambda (f L)
+
+;))
+
+;(define cardsSet->string (lambda (CS)         
+;    (cardSelector (numCards CS) CS)
+;))
+;
+;(define cardSelector (lambda (j CS)
+;    (if (= j 0)
+;        (string-append (cardToString j (nthCard CS j)))
+;        (string-append (cardToString j (nthCard CS j)) (cardSelector (- j 1) CS))
+;    ) 
+;))
+;
+;(define cardToString (lambda (k card)
+;    (string-join card " - "
+;        #:before-first (string-append "C" (toStringElement (+ k 1)) ": ")
+;        #:before-last " - "
+;        #:after-last " - \n")
 ;))
 
 ;; depthLayers
@@ -828,4 +848,3 @@
         #f
     )
 ))
-

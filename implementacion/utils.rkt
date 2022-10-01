@@ -68,7 +68,7 @@
     )
 )
 
-;(define myMap3 (lambda (f L M)
+;(define myMap3 (lambda (f i L L2)
 ;            (if (null? L)
 ;            null
 ;            (cons (f (car L) M) (myMap3 f (cdr L) M))
