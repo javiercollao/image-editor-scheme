@@ -632,32 +632,28 @@
 
 ;; image->string
 ;; Descripción: Función que transforma una imagen a una representación string. La transformación depende de si la imagen es bitmap-d, hexmap-d o pixmap-d, para lo cual se pasa la función de transformación correspondiente.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión:
+;; Dom: funcion (fn), image (list)
+;; Rec: string
+;; Tipo de recursión: Natural
 
-;(define image->string (lambda (f L)
+; (image->string pixbit->string img2)
 
-;))
+(define image->string (lambda (f IMG)
+    (image->stringAux f (elementsPix IMG) 0 (height IMG))
+))
 
-;(define cardsSet->string (lambda (CS)         
-;    (cardSelector (numCards CS) CS)
-;))
-;
-;(define cardSelector (lambda (j CS)
-;    (if (= j 0)
-;        (string-append (cardToString j (nthCard CS j)))
-;        (string-append (cardToString j (nthCard CS j)) (cardSelector (- j 1) CS))
-;    ) 
-;))
-;
-;(define cardToString (lambda (k card)
-;    (string-join card " - "
-;        #:before-first (string-append "C" (toStringElement (+ k 1)) ": ")
-;        #:before-last " - "
-;        #:after-last " - \n")
-;))
+(define image->stringAux (lambda (f L y n)         
+    (if (= y n)
+      (string-append (example2 (myMap3 f (myFilter2 posYVerification y L))))
+      (string-append (example2 (myMap3 f (myFilter2 posYVerification y L))) (image->stringAux f L (+ y 1) n))
+    )
+))
 
+(define example2 (lambda (listColor)
+    (string-join listColor " " 
+        #:after-last "\n")
+))
+ 
 ;; depthLayers
 ;; Descripción: Función que permite separar una imágen en capas en base a la profundidad en que se sitúan los pixeles. El resultado consiste en una lista de imágenes donde cada una agrupa los píxeles que se sitúan en el mismo nivel de profundidad. Además, en las imágenes resultantes se sustituyen los píxeles que se encuentran en otro nivel de profundidad por píxeles blancos (255,255,255).
 ;; Dom: img
@@ -844,6 +840,33 @@
 ;; Descripción: Compara dos coordenadas verificando que son iguales
 (define missingAux (lambda (L i)
     (if (equal? L i)
+        #t
+        #f
+    )
+))
+
+;; orderPixels
+
+(define orderPixels (lambda (IMG)
+    (orderPixelsAux (coordinateGenerator IMG) (elementsPix IMG))
+))
+
+(define orderPixelsAux (lambda (L E)
+    (if (= (length L) 1)
+        (append (myFilter2 isCoordinate (firstElement L) E) null)
+        (append (myFilter2 isCoordinate (firstElement L) E) (orderPixelsAux (firstElementRemove L) (myFilter2 notCoordinate (firstElement L) E)))
+    )
+))
+
+(define isCoordinate (lambda (pixFromE element)
+    (if (equal? element (list (getPosX pixFromE) (getPosY pixFromE)))
+        #t
+        #f
+    )
+))
+
+(define notCoordinate (lambda (pixFromE element)
+    (if (not (equal? element (list (getPosX pixFromE) (getPosY pixFromE))))
         #t
         #f
     )

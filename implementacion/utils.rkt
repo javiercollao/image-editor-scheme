@@ -67,14 +67,14 @@
         )
     )
 )
-
-;(define myMap3 (lambda (f i L L2)
-;            (if (null? L)
-;            null
-;            (cons (f (car L) M) (myMap3 f (cdr L) M))
-;        )
-;    )
-;)
+;;;
+(define myMap3 (lambda (f L)
+            (if (null? L)
+            null
+            (append (list (f (car L))) (myMap3 f (cdr L)))
+        )
+    )
+)
 
 ;; Descripción: retorna un elemento que nace por una operacion que involucra a todos los elementos de una lista
 ;; Dom: funcionOperacion X lista

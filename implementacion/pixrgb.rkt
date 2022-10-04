@@ -95,6 +95,6 @@
 ;; ======================================================
 ;; Otras funciones
 
-;(define pixbit->string (lambda (L)
-
-;))
+(define pixrgb->string (lambda (L)
+    (string-append "(" (toStringElement (getR L)) "," (toStringElement (getG L)) "," (toStringElement (getB L)) ")" )
+))

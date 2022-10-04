@@ -94,5 +94,6 @@
 ;; ======================================================
 ;; Otras funciones
 
-;(define pixbit->string (lambda (L)
-;))
+(define pixbit->string (lambda (L)
+    (toStringElement (getBit L))
+))

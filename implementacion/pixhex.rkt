@@ -68,8 +68,9 @@
 ;; ======================================================
 ;; Otras funciones
 
-;(define pixbit->string (lambda (L)
-;))
+(define pixhex->string (lambda (L)
+    (string-append "#" (getBit L))
+))
 
 
 
