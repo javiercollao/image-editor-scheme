@@ -20,31 +20,31 @@ Requerimientos No funcionales
 7. (obligatorio) Dom->Rec:          1
 8. (1 pts) Organización:            1
 9. (2.5 pts) Historial:             1
-10. (obligatorio) Pruebas:         1
-11. (obligatorio) Prerrequisitos:       1
+10. (obligatorio) Pruebas:          1
+11. (obligatorio) Prerrequisitos:   1
 
 Requerimientos funcionales	    
 
-TDAs                               0
-image                              0
-bitmap? 0
-pixmap? 0
-hexmap? 0
-compressed? 0
-flipH   0
-flipV   0
-crop    0
-imgRGB->imgHex  0
-histogram   0
-rotate90    0
-compress    0
-edit    0
-invertColorBit  0
-invertColorRGB  0
-adjustChannel   0
-image->string   0
-depthLayers 0
-decompress  0
+TDAs                               1
+image                              1
+bitmap?                            1
+pixmap?                            1
+hexmap?                            1
+compressed?                        1
+flipH                              1
+flipV                              1
+crop                               1
+imgRGB->imgHex                     1
+histogram                          1
+rotate90                           1
+compress                           1
+edit                               1
+invertColorBit                     1
+invertColorRGB                     1
+adjustChannel                      1
+image->string                      0.75
+depthLayers                        1
+decompress                         1
 
 
 

@@ -112,14 +112,21 @@
     (pixhex-d? e)
 ))
 
-
 ;; compressed?
 ;; Descripción: función que determina si una imagen está comprimida.
 ;; Dom: 
 ;; Rec:
 ;; Tipo de recursión:
 
-
+(define compressed? (lambda (IMG)
+    (if (integer? (getWidth IMG))
+        #f
+        (if (= 3 (length IMG))
+            #t
+            #f
+        )
+    )
+))
 
 ;; ======================================================
 ;; Capa Selector
@@ -437,9 +444,6 @@
     )
 ))
 
-; (define img5 (imgRGB->imgHex img4))
-; (myMap colorsHex (elementsPix img5))
-
 ;; rotate90
 ;; Descripción: rota la imágen 90° a la derecha.
 ;; Dom: image (list)
@@ -622,9 +626,9 @@
 
 ;; adjustChannel
 ;; Descripción: Función que permite ajustar cualquier canal de una imagen con pixeles pixrgb-d, incluido el canal de profundidad d. Se asume que la función que modificará el canal produce valores dentro del rango válido.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión:
+;; Dom: f1 función selectora del canal, f2 función operacion a realizar en el canal, f3 función modificadora
+;; Rec: pixrgb-d
+;; Tipo de recursión: NA
 
 (define adjustChannel
     (lambda (f1)
@@ -638,6 +642,10 @@
     )
 )
 
+;; incCh
+;; Descripción: es una función que incrementa el valor del canal R en una unidad.
+;; Dom: n (int)
+;; Rec: int 
 
 (define incCh (lambda (n)
     (if (= n 255)
@@ -645,6 +653,11 @@
         (+ n 1)
     )
 ))
+ 
+;; setR
+;; Descripción: modificador del canal R en un pixrgb-d
+;; Dom: elementR (int), pixrgb-d (list)
+;; Rec: pixrgb-d (list)
 
 (define setR (lambda (elementR L)
     (pixrgb-d (getPosX L) (getPosY L) elementR (getG L) (getB L) (getDepth L))
@@ -658,20 +671,18 @@
 ;; Rec: string
 ;; Tipo de recursión: Natural
 
-; (image->string pixbit->string img2)
-
-(define image->string (lambda (f IMG)
+(define image->string (lambda (IMG f) 
     (image->stringAux f (elementsPix IMG) 0 (height IMG))
 ))
 
 (define image->stringAux (lambda (f L y n)         
     (if (= y n)
-      (string-append (example2 (myMap3 f (myFilter2 posYVerification y L))))
-      (string-append (example2 (myMap3 f (myFilter2 posYVerification y L))) (image->stringAux f L (+ y 1) n))
+      (string-append (stringJoin (myMap3 f (myFilter2 posYVerification y L))))
+      (string-append (stringJoin (myMap3 f (myFilter2 posYVerification y L))) (image->stringAux f L (+ y 1) n))
     )
 ))
 
-(define example2 (lambda (listColor)
+(define stringJoin (lambda (listColor)
     (string-join listColor " " 
         #:after-last "\n")
 ))
@@ -771,7 +782,7 @@
 ;; Tipo de recursión:  
 
 (define decompress (lambda (IMGC)
-    (imageList (getWidth (compressedImage IMGC)) (getHeight (compressedImage IMGC))  (append (elementsPix (compressedImage IMGC)) (decompressAux (createPixelPosition IMGC) (colorOfPixelsDeleted IMGC) (depthsOfPixelsDeleted IMGC) (length (createPixelPosition IMGC)))))
+    (orderPixels (imageList (getWidth (compressedImage IMGC)) (getHeight (compressedImage IMGC))  (append (elementsPix (compressedImage IMGC)) (decompressAux (createPixelPosition IMGC) (colorOfPixelsDeleted IMGC) (depthsOfPixelsDeleted IMGC) (length (createPixelPosition IMGC))))))
 ))
 
 (define decompressAux (lambda (pixelPositions pixelColor depthsOfPixels i)
@@ -867,26 +878,22 @@
     )
 ))
 
-;; orderPixels
-
+;; Descripción: Ordena los pixeles de una imagen por coordenada
 (define orderPixels (lambda (IMG)
-    (orderPixelsAux (coordinateGenerator IMG) (elementsPix IMG))
+    (imageList (getWidth IMG) (getHeight IMG) (orderPixelsAux (coordinateGenerator IMG) (elementsPix IMG)))
 ))
-
 (define orderPixelsAux (lambda (L E)
     (if (= (length L) 1)
         (append (myFilter2 isCoordinate (firstElement L) E) null)
         (append (myFilter2 isCoordinate (firstElement L) E) (orderPixelsAux (firstElementRemove L) (myFilter2 notCoordinate (firstElement L) E)))
     )
 ))
-
 (define isCoordinate (lambda (pixFromE element)
     (if (equal? element (list (getPosX pixFromE) (getPosY pixFromE)))
         #t
         #f
     )
 ))
-
 (define notCoordinate (lambda (pixFromE element)
     (if (not (equal? element (list (getPosX pixFromE) (getPosY pixFromE))))
         #t
