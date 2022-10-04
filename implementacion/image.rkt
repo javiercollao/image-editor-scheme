@@ -626,9 +626,31 @@
 ;; Rec:
 ;; Tipo de recursión:
 
-;(define adjustChannel (lambda (L)
+(define adjustChannel
+    (lambda (f1)
+        (lambda (f2) 
+            (lambda (f3) 
+                (lambda (pix) 
+                    (f3 (f2 (f1 pix)) pix)
+                )
+            )
+        )
+    )
+)
 
-;))
+
+(define incCh (lambda (n)
+    (if (= n 255)
+        0
+        (+ n 1)
+    )
+))
+
+(define setR (lambda (elementR L)
+    (pixrgb-d (getPosX L) (getPosY L) elementR (getG L) (getB L) (getDepth L))
+))
+
+; ((((adjustChannel getR) incCh) setR) negro-rgb)
 
 ;; image->string
 ;; Descripción: Función que transforma una imagen a una representación string. La transformación depende de si la imagen es bitmap-d, hexmap-d o pixmap-d, para lo cual se pasa la función de transformación correspondiente.
