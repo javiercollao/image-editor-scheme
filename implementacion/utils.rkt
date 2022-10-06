@@ -67,27 +67,11 @@
         )
     )
 )
-;;;
+
 (define myMap3 (lambda (f L)
             (if (null? L)
             null
             (append (list (f (car L))) (myMap3 f (cdr L)))
-        )
-    )
-)
-
-;; Descripción: retorna un elemento que nace por una operacion que involucra a todos los elementos de una lista
-;; Dom: funcionOperacion X lista
-;; Rec: elemento
-;; Tipo de recursión: Natural
-
-(define myReduce (lambda (f L)
-        (if (null? L)
-            null
-            (if (null? (cdr L))
-                (car L)
-                (f (car L) (myReduce f (cdr L)))
-            )
         )
     )
 )

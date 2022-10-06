@@ -22,9 +22,7 @@
 ;; Dom: Width (int) , Height (int) , [pixbit-d* | pixrgb-d* | pixhex-d*]
 ;; Rec: image (list)
 ;; Tipo de recursión: NA
-
-;;(define image2 list)
-
+ 
 (define imageList list)
 
 (define image (lambda (W H . listsPix)
@@ -43,8 +41,8 @@
 ;; Rec: boolean
 ;; Tipo de recursión: Cola
 
-(define bitmap? (lambda (imageList)
-    (if (= 0 (length (bitmap?Aux1 imageList)))
+(define bitmap? (lambda (IMG)
+    (if (= 0 (length (bitmap?Aux1 IMG)))
         #t
         #f
     )
@@ -68,8 +66,8 @@
 ;; Rec: 
 ;; Tipo de recursión: Cola
 
-(define pixmap? (lambda (imageList)
-    (if (= 0 (length (pixmap?Aux1 imageList)))
+(define pixmap? (lambda (IMG)
+    (if (= 0 (length (pixmap?Aux1 IMG)))
         #t
         #f
     )
@@ -93,8 +91,8 @@
 ;; Rec:
 ;; Tipo de recursión: Cola
 
-(define hexmap? (lambda (imageList)
-    (if (= 0 (length (hexmap?Aux1 imageList)))
+(define hexmap? (lambda (IMG)
+    (if (= 0 (length (hexmap?Aux1 IMG)))
         #t
         #f
     )
@@ -136,13 +134,13 @@
 ;; Rec: width (int)
 ;; Tipo de recursión: NA
 
-(define getWidth (lambda (imageList)
-    (firstElement imageList)
+(define getWidth (lambda (IMG)
+    (firstElement IMG)
 ))
 
 ;; Descripción: Retorna el elemento Width de una imagen considerando que la posicion 0. 
-(define width (lambda (img)
-    (- (getWidth img) 1)
+(define width (lambda (IMG)
+    (- (getWidth IMG) 1)
 ))
 
 ;; Descripción: Retorna el elemento Height de una imagen. 
@@ -150,13 +148,13 @@
 ;; Rec: height (int)
 ;; Tipo de recursión: NA
 
-(define getHeight (lambda (imageList)
-    (firstElement (firstElementRemove imageList))
+(define getHeight (lambda (IMG)
+    (firstElement (firstElementRemove IMG))
 ))
 
 ;; Descripción: Retorna el elemento Height de una imagen considerando que la posicion 0. 
-(define height (lambda (img)
-    (- (getHeight img) 1)
+(define height (lambda (IMG)
+    (- (getHeight IMG) 1)
 ))
 
 ;; Descripción: Retorna la lista de elementos [pixbit-d* | pixrgb-d* | pixhex-d*]
@@ -164,8 +162,8 @@
 ;; Rec: [pixbit-d* | pixrgb-d* | pixhex-d*] (list)
 ;; Tipo de recursión: NA
 
-(define elementsPix (lambda (imageList)
-    (firstElement (firstElementRemove (firstElementRemove imageList)))
+(define elementsPix (lambda (IMG)
+    (firstElement (firstElementRemove (firstElementRemove IMG)))
 ))
 
 ;; ======================================================
@@ -178,7 +176,7 @@
 ;; Tipo de recursión: Natural
 
 (define flipH (lambda (IMG)
-    (imageList (getWidth IMG) (getHeight IMG) (flipHAux (width IMG) 0 (elementsPix IMG)))
+    (image (getWidth IMG) (getHeight IMG) (flipHAux (width IMG) 0 (elementsPix IMG)))
 ))
  
 (define flipHAux (lambda (i n L)
@@ -630,14 +628,10 @@
 ;; Rec: pixrgb-d
 ;; Tipo de recursión: NA
 
-(define adjustChannel
-    (lambda (f1)
-        (lambda (f2) 
-            (lambda (f3) 
-                (lambda (pix) 
-                    (f3 (f2 (f1 pix)) pix)
-                )
-            )
+
+(define adjustChannel (lambda (f1 f2 f3)
+        (lambda (pix) 
+            (f3 (f2 (f1 pix)) pix)
         )
     )
 )
