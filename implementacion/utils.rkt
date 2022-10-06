@@ -13,7 +13,6 @@
 ;; Dom: funcionCondicion X lista
 ;; Rec: lista de elementos
 ;; Tipo de recursión: Natural
-
 (define myFilter (lambda (f L)
         (if (null? L)
             null
@@ -51,7 +50,6 @@
 ;; Dom: funcionOperacion X lista
 ;; Rec: lista de elementos
 ;; Tipo de recursión: Natural
-
 (define myMap (lambda (f L)
             (if (null? L)
             null
@@ -76,19 +74,16 @@
     )
 )
 
-
 ;; Descripción: retorna el primer elemento de la lista
 ;; Dom: list 
 ;; Rec: element
 ;; Tipo de recursión: NA
-
 (define firstElement car)
 
 ;; Descripción: retorna el ultimo elemento de la lista
 ;; Dom: list 
 ;; Rec: element
 ;; Tipo de recursión: NA
-
 (define lastElement (lambda (L)
     (car (reverse L))
 ))
@@ -97,14 +92,12 @@
 ;; Dom: list 
 ;; Rec: element
 ;; Tipo de recursión: NA
-
 (define firstElementRemove cdr)
 
 ;; Descripción: Transforma un elemento entero a string
 ;; Dom: x (int)
 ;; Rec: x (str)
 ;; Tipo de recursión: natural
-
 (define toStringElement (lambda (x)
     (if (integer? x)
         (~a x)
@@ -113,14 +106,10 @@
 ))
 
 ;; Descripción: retorna el largo de un string
-
 (define strLength string-length)
 
-
 ;; Descripción: retorna el largo de un list
- 
 (define listLength length)
 
 ;; Descripción: retorna un booleano como verificacion si un elemento es falso
-
 (define isFalse? false?)

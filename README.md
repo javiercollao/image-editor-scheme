@@ -44,26 +44,44 @@ Por lo que podemos identificar algunas funcionalidades
 
 Con el analisis del enenunciado se concluye que el juego Dobble contiene:
 
-1. TDA image, contiene todas las caractericas de una imagen.
-2. TDA pixbit
-3. TDA pixhex
-4. TDA pixrgb
+1. TDA image, contiene todas las caractericas y funcionalidades de una imagen.
+2. TDA pixbit, contiene todas las caractericas y funcionalidades de una pixel tipo bit.
+3. TDA pixhex, contiene todas las caractericas y funcionalidades de una pixel tipo hexadecimal.
+4. TDA pixrgb, contiene todas las caractericas y funcionalidades de una pixel tipo RGB.
 
 ### Documentación
 
-Para usar este proyecto necesitas descargar el repositorio y asegurarte de que existen todos los archivos ubicados en la carpeta "./implementacion", los archivos requeridos son los siguientes:
+Podemos generar tres tipos de imágenes con el comando image, de tipo bit, rgb y
+hexadecimal respectivamente.
+```
+(image 2 2 (pixbit-d 0 0 1 10)(pixbit-d 0 1 0 20)(pixbit-d 1 0 0 30)(pixbit-d 1 1 1
+4))
 
-1. utils/lista_19177246_CollaoCallpa.rkt 
-2. pruebas_19177246_CollaoCallpa.rkt 
-3. main_19177246_CollaoCallpa.rkt
+(image 2 2 (pixrgb-d 0 0 10 10 10 10)(pixrgb-d 0 1 20 20 20 20)(pixrgb-d 1 0 30 30 30
+30) (pixrgb-d 1 1 40 40 40 40))
 
-Para poder utilizarlo necesitas abrir solo el archivo "main" en el interprete Dr. Racket, desde este archivo se cargaran todas los modulos. Una vez ejecutado se vera el funcionamiento de varios ejemplos para cada una de las funciones importantes. Recordar que para que todo funcione correctamente, necesitamos crear "image".
+(image 2 2 ((pixhex-d 0 0 "0A0A0A" 10) (pixhex-d 0 1 "141414" 20) (pixhex-d 1 0
+"1E1E1E" 30) (pixhex-d 1 1 "282828" 40))
+```
+Para cada imagen podemos utilizar diferentes funciones como flipH, flipV, crop, histogram, compress, decompress entre otras.
 
+```
+(flipH (image 2 2 (pixbit-d 0 0 1 10)(pixbit-d 0 1 0 20)(pixbit-d 1 0 0 30)(pixbit-d 1
+1 1 4)))
+```
+```
+(compress (image 2 2 (pixrgb-d 0 0 10 10 10 10)(pixrgb-d 0 1 20 20 20 20)(pixrgb-d 1 0
+30 30 30 30) (pixrgb-d 1 1 40 40 40 40)))
+```
+```
+(rotate90 (image 2 2 ((0 0 "0A0A0A" 10) (0 1 "141414" 20) (1 0 "1E1E1E" 30) (1 1
+"282828" 40)))
+```
 
 ### Software
 
-Para este proyecto es necesario utilizar el interprete Dr. Racket especificamente 8.4 o superior.
-Todo el proyecto se basa en listas y funciones por lo que cada TDA utiliza esa estructura de dato.
+Para este proyecto se utilzó el interprete Dr. Racket especificamente la versión 8.4.
+El proyecto esta basado en listas, como requerimiento se debía implementar funciones propias de un TDA Lista, por lo que se implementaron utilizando solo funcionalidades básicas de Scheme.
 
 
 

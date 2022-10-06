@@ -28,9 +28,6 @@
     )
 ))
 
-;; (pixhex-d 2 3 "ffffff" 3) #t
-;; (pixhex-d 1 3 423233 0) #f
-
 ;; ======================================================
 ;; Capa Selector
 
@@ -67,6 +64,11 @@
 
 ;; ======================================================
 ;; Otras funciones
+
+;; pixhex->string
+;; Descripción: transforma en string un pixhex-d
+;; Dom: pixhex-d (list)
+;; Rec: string
 
 (define pixhex->string (lambda (L)
     (string-append "#" (getBit L))

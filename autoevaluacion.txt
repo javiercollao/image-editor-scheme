@@ -43,7 +43,7 @@ invertColorBit                     1
 invertColorRGB                     1
 adjustChannel                      1
 image->string                      0.75
-depthLayers                        1
+depthLayers                        0.75
 decompress                         1
 
 

@@ -28,9 +28,6 @@
     )
 ))
 
-;; (pixrgb-d 1 1 23 234 44 5) #t
-;; (pixrgb-d 1 1 234 234 434 5) #f
-
 ;; ======================================================
 ;; Capa Selector
 
@@ -94,6 +91,33 @@
 
 ;; ======================================================
 ;; Otras funciones
+
+;; incCh
+;; Descripción: es una función que incrementa el valor del canal R en una unidad.
+;; Dom: n (int)
+;; Rec: n (int) 
+
+(define incCh (lambda (n)
+    (if (= n 255)
+        0
+        (+ n 1)
+    )
+))
+ 
+;; setR
+;; Descripción: modificador del canal R en un pixrgb-d
+;; Dom: elementR (int), pixrgb-d (list)
+;; Rec: pixrgb-d (list)
+
+(define setR (lambda (elementR L)
+    (pixrgb-d (getPosX L) (getPosY L) elementR (getG L) (getB L) (getDepth L))
+))
+
+
+;; pixrgb->string
+;; Descripción: transforma en string un pixrgb-d
+;; Dom: pixrgb-d (list)
+;; Rec: string
 
 (define pixrgb->string (lambda (L)
     (string-append "(" (toStringElement (getR L)) "," (toStringElement (getG L)) "," (toStringElement (getB L)) ")" )

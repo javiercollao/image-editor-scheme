@@ -249,8 +249,8 @@
 
 ;; crop
 ;; Descripción: Recortar una imágen a partir de un cuadrante.
-;; Dom: 
-;; Rec:
+;; Dom: image (list), x1 (int), y1 (int), x2 (int), x2 (int)
+;; Rec: image (list)
 ;; Tipo de recursión: Natural
 
 (define crop (lambda (IMG x1 y1 x2 y2)
@@ -348,9 +348,9 @@
 
 ;; histogram
 ;; Descripción: Retorna un histograma de frecuencias a partir de los colores en cada una de las imágenes. Debe funcionar para bitmap-d, pixmap-d y hexmap-d.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión:
+;; Dom: image (list)
+;; Rec: histogram (list)
+;; Tipo de recursión: Natural
 
 (define histogram (lambda (IMG)
     (if (bitmap? IMG)
@@ -446,7 +446,7 @@
 ;; Descripción: rota la imágen 90° a la derecha.
 ;; Dom: image (list)
 ;; Rec: image (list)
-;; Tipo de recursión:
+;; Tipo de recursión: Natural
 
 (define rotate90 (lambda (IMG)
     (flipV (imageList (getWidth IMG) (getHeight IMG) (append (rotate90Aux (height IMG) 0 (elementsPix IMG)) (myFilter notPosYAndPosXVerification (elementsPix IMG)))))
@@ -491,9 +491,9 @@
 
 ;; compress
 ;; Descripción: Comprime una imágen eliminando aquellos pixeles con el color más frecuente. La imagen comprimida resultante solo se puede manipular con las otras funciones una vez que haya sido descomprimida a partir de la función señalada más adelante.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión:
+;; Dom: image (list)
+;; Rec: imagen comprimida (list)
+;; Tipo de recursión: De cola
 
 (define compress (lambda (IMG)
     (if (bitmap? IMG)
@@ -628,36 +628,12 @@
 ;; Rec: pixrgb-d
 ;; Tipo de recursión: NA
 
-
 (define adjustChannel (lambda (f1 f2 f3)
         (lambda (pix) 
             (f3 (f2 (f1 pix)) pix)
         )
     )
 )
-
-;; incCh
-;; Descripción: es una función que incrementa el valor del canal R en una unidad.
-;; Dom: n (int)
-;; Rec: int 
-
-(define incCh (lambda (n)
-    (if (= n 255)
-        0
-        (+ n 1)
-    )
-))
- 
-;; setR
-;; Descripción: modificador del canal R en un pixrgb-d
-;; Dom: elementR (int), pixrgb-d (list)
-;; Rec: pixrgb-d (list)
-
-(define setR (lambda (elementR L)
-    (pixrgb-d (getPosX L) (getPosY L) elementR (getG L) (getB L) (getDepth L))
-))
-
-; ((((adjustChannel getR) incCh) setR) negro-rgb)
 
 ;; image->string
 ;; Descripción: Función que transforma una imagen a una representación string. La transformación depende de si la imagen es bitmap-d, hexmap-d o pixmap-d, para lo cual se pasa la función de transformación correspondiente.
@@ -683,7 +659,7 @@
  
 ;; depthLayers
 ;; Descripción: Función que permite separar una imágen en capas en base a la profundidad en que se sitúan los pixeles. El resultado consiste en una lista de imágenes donde cada una agrupa los píxeles que se sitúan en el mismo nivel de profundidad. Además, en las imágenes resultantes se sustituyen los píxeles que se encuentran en otro nivel de profundidad por píxeles blancos (255,255,255).
-;; Dom: img
+;; Dom: image (list)
 ;; Rec: lista de imagenes
 ;; Tipo de recursión: Natural
 
@@ -771,9 +747,9 @@
 
 ;; decompress
 ;; Descripción: Función que permite descomprimir una imágen comprimida. Para esto se toma como referencia el color más frecuente a fin de reconstruir todos los píxeles que fueron eliminados en la compresión.
-;; Dom: 
-;; Rec:
-;; Tipo de recursión:  
+;; Dom: imagen comprimida (list)
+;; Rec: image (list)
+;; Tipo de recursión: Natural
 
 (define decompress (lambda (IMGC)
     (orderPixels (imageList (getWidth (compressedImage IMGC)) (getHeight (compressedImage IMGC))  (append (elementsPix (compressedImage IMGC)) (decompressAux (createPixelPosition IMGC) (colorOfPixelsDeleted IMGC) (depthsOfPixelsDeleted IMGC) (length (createPixelPosition IMGC))))))
@@ -786,7 +762,7 @@
     )
 ))
 
-;; Descripción: a partir de 
+;; Descripción: a partir de una imagen incompleta genera las posiciones restantes
 (define createPixelPosition (lambda (IMGC)
     (myMap positionsPixel (myFilter2 findPositions 0 (missingElements IMGC)))
 ))

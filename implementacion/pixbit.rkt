@@ -27,9 +27,6 @@
     )
 ))
 
-;; (pixbit-d 0 0 1 4) #t
-;; (pixbit-d 0 2 2 2) #f
-
 ;; ======================================================
 ;; Capa Selector
 
@@ -93,6 +90,11 @@
 
 ;; ======================================================
 ;; Otras funciones
+
+;; pixbit->string
+;; Descripción: transforma en string un pixbit-d
+;; Dom: pixbit-d (list)
+;; Rec: string
 
 (define pixbit->string (lambda (L)
     (toStringElement (getBit L))
