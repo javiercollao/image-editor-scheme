@@ -176,7 +176,7 @@
 ;; Tipo de recursión: Natural
 
 (define flipH (lambda (IMG)
-    (image (getWidth IMG) (getHeight IMG) (flipHAux (width IMG) 0 (elementsPix IMG)))
+    (imageList (getWidth IMG) (getHeight IMG) (flipHAux (width IMG) 0 (elementsPix IMG)))
 ))
  
 (define flipHAux (lambda (i n L)
@@ -199,7 +199,7 @@
     (if (pixbit-d? L)
         (pixbit-d n (getPosY L) (getBit L) (getDepth L))
         (if (pixrgb-d? L)
-            (pixrgb-d n (getPosY L) (getR L) (getG L) (getB L) (getDepth L))
+            (pixrgb-d n (getPosY L) (getR L) (getG L) (getB L) (getDepth-rgb L))
             (if (pixhex-d? L)
                 (pixhex-d n (getPosY L) (getHex L) (getDepth L))
                 null
@@ -238,7 +238,7 @@
     (if (pixbit-d? L)
         (pixbit-d (getPosX L) n (getBit L) (getDepth L))
         (if (pixrgb-d? L)
-            (pixrgb-d (getPosX L) n (getR L) (getG L) (getB L) (getDepth L))
+            (pixrgb-d (getPosX L) n (getR L) (getG L) (getB L) (getDepth-rgb L))
             (if (pixhex-d? L)
                 (pixhex-d (getPosX L) n (getHex L) (getDepth L))
                 null
@@ -308,7 +308,7 @@
 ))
 
 (define newHex (lambda (L)
-    (pixhex-d (getPosX L) (getPosY L) (converterRGBToHex (getR L) (getG L) (getB L)) (getDepth L)))
+    (pixhex-d (getPosX L) (getPosY L) (converterRGBToHex (getR L) (getG L) (getB L)) (getDepth-rgb L)))
 )
 
 ;; Descripción: Se encarga de convertir rgb a hexadecimal
@@ -480,7 +480,7 @@
     (if (pixbit-d? L)
         (pixbit-d n n (getBit L) (getDepth L))
         (if (pixrgb-d? L)
-            (pixrgb-d n n (getR L) (getG L) (getB L) (getDepth L))
+            (pixrgb-d n n (getR L) (getG L) (getB L) (getDepth-rgb L))
             (if (pixhex-d? L)
                 (pixhex-d n n (getHex L) (getDepth L))
                 null
@@ -617,7 +617,7 @@
 
 (define invertColorRGB (lambda (L)
     (if (pixrgb-d? L)
-        (pixrgb-d (getPosX L) (getPosY L) (- 255 (getR L)) (- 255 (getG L)) (- 255 (getB L)) (getDepth L))
+        (pixrgb-d (getPosX L) (getPosY L) (- 255 (getR L)) (- 255 (getG L)) (- 255 (getB L)) (getDepth-rgb L))
         L
     )
 ))
