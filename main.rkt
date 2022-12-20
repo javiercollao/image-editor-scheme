@@ -1,9 +1,9 @@
 #lang racket
-(require "./utils_19177246_CollaoCallpa.rkt")  
-(require "./image_19177246_CollaoCallpa.rkt")
-(require "./pixbit_19177246_CollaoCallpa.rkt") 
-(require "./pixhex_19177246_CollaoCallpa.rkt") 
-(require "./pixrgb_19177246_CollaoCallpa.rkt")
+(require "./src/utils.rkt")  
+(require "./src/image.rkt")
+(require "./src/pixbit.rkt") 
+(require "./src/pixhex.rkt") 
+(require "./src/pixrgb.rkt")
 
 ;; Script de Pruebas
 

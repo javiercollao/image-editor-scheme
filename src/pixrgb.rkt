@@ -1,6 +1,6 @@
 #lang racket
-(require "./utils_19177246_CollaoCallpa.rkt")
-(require "./pixbit_19177246_CollaoCallpa.rkt")
+(require "./utils.rkt")
+(require "./pixbit.rkt")
 (provide (all-defined-out))
 
 ;; ======================================================
