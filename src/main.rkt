@@ -1,9 +1,9 @@
 #lang racket
-(require "./src/utils.rkt")  
-(require "./src/image.rkt")
-(require "./src/pixbit.rkt") 
-(require "./src/pixhex.rkt") 
-(require "./src/pixrgb.rkt")
+(require "./utils.rkt")
+(require "./image.rkt")
+(require "./pixbit.rkt")
+(require "./pixhex.rkt")
+(require "./pixrgb.rkt")
 
 ;; Script de Pruebas
 
