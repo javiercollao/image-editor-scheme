@@ -1,4 +1,4 @@
-## Laboratorio 1 : Paradigma Declarativo Funcional con Scheme
+## Desafío 1 : Paradigma Declarativo Funcional con Scheme
 
 ### Enunciado
 
@@ -38,6 +38,13 @@ Por lo que podemos identificar algunas funcionalidades
 14. Editar una imágen a partir de la aplicación de funciones especiales sobre los pixeles
 15. Separar capas de una imagen 3D en base a la profundidad. De esta forma desde una imagen 3D se puede devolver una lista de imágenes 2D
 16. Redimensionar imágen
+
+
+
+
+![](https://miro.medium.com/max/1306/1*I0I0QKbcXrvyI2usu-si_Q.webp)
+
+
 
 
 ### TDAs
@@ -80,13 +87,9 @@ Para cada imagen podemos utilizar diferentes funciones como flipH, flipV, crop, 
 
 ### Software
 
-Para este proyecto se utilzó el interprete Dr. Racket especificamente la versión 8.4.
-El proyecto esta basado en listas, como requerimiento se debía implementar funciones propias de un TDA Lista, por lo que se implementaron utilizando solo funcionalidades básicas de Scheme.
+Para este proyecto se utilzó Dr. Racket especificamente la versión 8.4.
+El proyecto esta implementado utilizando solo funcionalidades básicas de Scheme.
 
+### Book
 
-
-
- 
-
-
- 
+ [SICP - Structure And Interpretation Of Computer Programs](https://www.amazon.com/-/es/Harold-Abelson/dp/0262510871)
